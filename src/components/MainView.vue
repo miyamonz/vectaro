@@ -32,12 +32,18 @@ export default class MainView extends Vue {
   private width: number = 500;
   private height: number = 500;
 
+  private editing: boolean = false;
+
   public down(x: number, y: number) {
+    this.editing = true;
     this.$store.dispatch("click", { x, y });
   }
   public up(x: number, y: number) {
-    //this.$store.dispatch("click", { x, y });
+    this.editing = false;
+    this.$store.dispatch("setHandleToLastBp", { x, y });
   }
-  public move(x: number, y: number) {}
+  public move(x: number, y: number) {
+    this.$store.dispatch("setHandleToLastBp", { x, y });
+  }
 }
 </script>

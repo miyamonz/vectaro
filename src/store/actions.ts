@@ -27,8 +27,11 @@ export const click = ({ state, getters }: Context, point: Point) => {
     addBreakpoint(currentPath, bp);
   }
 };
-export const setStartHandle = ({ state, getters }: Context, point: Point) => {
-  const [currentPath] = getters;
+export const setHandleToLastBp = (
+  { state, getters }: Context,
+  point: Point
+) => {
+  const { currentPath } = getters;
   if (currentPath === null) {
     return false;
   }
@@ -37,7 +40,10 @@ export const setStartHandle = ({ state, getters }: Context, point: Point) => {
     return false;
   }
   const lastBreakpoint = breakpoints[breakpoints.length - 1];
+  console.log(point);
+  const { x, y } = lastBreakpoint;
   lastBreakpoint.startHandle = point;
+  lastBreakpoint.endHandle = { x: 2 * x - point.x, y: 2 * y - point.y };
   return true;
 };
 export const exitDrawPath = ({ state }: Context) => {

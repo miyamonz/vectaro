@@ -2,11 +2,16 @@
   <svg :width="width" :height="height">
     <path v-for=" path in paths"
     :d="encodePath(path)" stroke="black" fill="transparent"/>
-    <g v-for=" path in paths">
-      <g v-for=" bp in path.breakpoints">
+    <g v-for=" path, idx in paths">
+      <g v-if="idx === $store.state.pushing" v-for=" bp in path.breakpoints">
       <circle :cx="bp.x"             :cy="bp.y"             r="5" />
-      <circle :cx="bp.startHandle.x" :cy="bp.startHandle.y" r="5" />
-      <circle :cx="bp.endHandle.x"   :cy="bp.endHandle.y"   r="5" />
+      <circle :cx="bp.startHandle.x" :cy="bp.startHandle.y" r="2" />
+      <circle :cx="bp.endHandle.x"   :cy="bp.endHandle.y"   r="2" />
+      <line 
+        :x1="bp.startHandle.x" :y1="bp.startHandle.y"
+        :x2="bp.endHandle.x" :y2="bp.endHandle.y"
+        style="stroke:gray"
+        />
       </g>
     </g>
   </svg>
