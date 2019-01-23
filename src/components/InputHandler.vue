@@ -2,7 +2,7 @@
   <div :style="style"
     @mousemove="move($event.offsetX, $event.offsetY)" @touchmove="touchmove"
     @mousedown="down($event.offsetX, $event.offsetY)" @touchstart="touchstart"
-    @mouseup="up"     @touchend="up"
+    @mouseup="up($event.offsetX, $event.offsetY)"     @touchend="up"
     ></div>
 </template>
 <script lang="ts">
@@ -40,7 +40,7 @@ export default class InputHandler extends Vue {
     this.$set(this, "before", { x, y });
   }
   @Emit()
-  public up() {
+  public up(x: number, y: number) {
     this.before = null;
   }
   public touchstart(e: TouchEvent) {
