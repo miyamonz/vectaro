@@ -11,7 +11,7 @@ export interface State {
 }
 
 const initialState: State = {
-  paths: [{ breakpoints: [] }],
+  paths: [],
   pushing: null
 };
 
@@ -20,6 +20,14 @@ export default new Vuex.Store({
   mutations: {
     setPushing(state: State, val: number | null) {
       state.pushing = val;
+    }
+  },
+  getters: {
+    currentPath(state: State) {
+      if (state.pushing === null) {
+        return null;
+      }
+      return state.paths[state.pushing];
     }
   },
   actions

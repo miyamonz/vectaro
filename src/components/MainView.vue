@@ -7,9 +7,9 @@
       />
       <InputHandler 
         v-bind="{width, height}"
-        @up="log"
+        @up="up"
         @down="down"
-        @move="log"
+        @move="move"
       />
     </LayerContainer>
     {{$store.state}}
@@ -35,8 +35,9 @@ export default class MainView extends Vue {
   public down(x: number, y: number) {
     this.$store.dispatch("click", { x, y });
   }
-  public log(...e: any[]) {
-    console.log(...e);
+  public up(x: number, y: number) {
+    //this.$store.dispatch("click", { x, y });
   }
+  public move(x: number, y: number) {}
 }
 </script>
