@@ -7,7 +7,7 @@ Vue.config.productionTip = false;
 
 window.onkeydown = (e: KeyboardEvent) => {
   if (e.key === "Escape") {
-    store.commit("setPushing", null);
+    store.dispatch("exitDrawPath");
   }
 };
 

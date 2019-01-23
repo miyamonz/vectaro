@@ -20,3 +20,6 @@ export const click = ({ state }: { state: State }, point: Point) => {
     addPoint(state, { point, target: state.pushing });
   }
 };
+export const exitDrawPath = ({ state }: { state: State }) => {
+  state.pushing = null;
+};
