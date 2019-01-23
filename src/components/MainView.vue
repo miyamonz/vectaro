@@ -1,6 +1,5 @@
 <template>
   <div>
-      {{$store.state}}
     <div class="canvases" :style="{width:width+'px', height:height+'px'}">
       <PathRenderer v-bind="{width, height}"
       :paths="$store.state.paths"
@@ -11,6 +10,7 @@
         @move="log"
       />
     </div>
+    {{$store.state}}
   </div>
 </template>
 <script lang="ts">

@@ -17,6 +17,10 @@ const initialState: State = {
 
 export default new Vuex.Store({
   state: initialState,
-  mutations: {},
+  mutations: {
+    setPushing(state: State, val: number | null) {
+      state.pushing = val;
+    }
+  },
   actions
 });
