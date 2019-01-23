@@ -21,15 +21,6 @@ import LayerContainer from "@/components/LayerContainer.vue";
 import InputHandler from "@/components/InputHandler.vue";
 import PathRenderer from "@/components/PathRenderer.vue";
 
-const getOffsetFromTouch = (touch: Touch) => {
-  const target = touch.target as Element;
-  const rect = target.getBoundingClientRect();
-  return {
-    x: touch.clientX - rect.left,
-    y: touch.clientY - rect.top
-  };
-};
-
 @Component({
   components: {
     LayerContainer,
