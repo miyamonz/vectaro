@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div class="canvases">
+      {{$store.state}}
+    <div class="canvases" :style="{width:width+'px', height:height+'px'}">
+      <PathRenderer v-bind="{width, height}"
+      :points="$store.state.breakpoints"/>
       <InputHandler v-bind="{width, height}"
         @up="log"
-        @down="log"
+        @down="down"
         @move="log"
       />
     </div>
@@ -12,6 +15,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import InputHandler from "@/components/InputHandler.vue";
+import PathRenderer from "@/components/PathRenderer.vue";
 
 const getOffsetFromTouch = (touch: Touch) => {
   const target = touch.target as Element;
@@ -24,15 +28,31 @@ const getOffsetFromTouch = (touch: Touch) => {
 
 @Component({
   components: {
-    InputHandler
+    InputHandler,
+    PathRenderer
   }
 })
 export default class MainView extends Vue {
   private width: number = 500;
   private height: number = 500;
 
+  public down(x: number, y: number) {
+    this.$store.commit("addPoint", { x, y });
+  }
   public log(...e: any[]) {
     console.log(...e);
   }
 }
 </script>
+<style lang="scss">
+.canvases {
+  position: relative;
+  margin: 0 auto;
+  border: solid 1px;
+  & > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+</style>

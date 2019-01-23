@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { Breakpoint } from "@/types.ts";
+import { Point, Breakpoint } from "@/types.ts";
 
 Vue.use(Vuex);
 
@@ -13,6 +13,10 @@ const initialState: State = {
 };
 export default new Vuex.Store({
   state: initialState,
-  mutations: {},
+  mutations: {
+    addPoint(state: State, point: Point) {
+      state.breakpoints.push(point as Breakpoint);
+    }
+  },
   actions: {}
 });
