@@ -3,7 +3,8 @@
       {{$store.state}}
     <div class="canvases" :style="{width:width+'px', height:height+'px'}">
       <PathRenderer v-bind="{width, height}"
-      :points="$store.state.breakpoints"/>
+      :paths="$store.state.paths"
+      />
       <InputHandler v-bind="{width, height}"
         @up="log"
         @down="down"
@@ -37,7 +38,7 @@ export default class MainView extends Vue {
   private height: number = 500;
 
   public down(x: number, y: number) {
-    this.$store.commit("addPoint", { x, y });
+    this.$store.dispatch("click", { x, y });
   }
   public log(...e: any[]) {
     console.log(...e);

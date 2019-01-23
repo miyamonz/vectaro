@@ -1,22 +1,22 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { Point, Breakpoint } from "@/types.ts";
+import * as actions from "@/store/actions.ts";
+import { BezierPath } from "@/types.ts";
 
 Vue.use(Vuex);
 
 export interface State {
-  breakpoints: Breakpoint[];
+  paths: BezierPath[];
+  pushing: number | null;
 }
 
 const initialState: State = {
-  breakpoints: []
+  paths: [{ breakpoints: [] }],
+  pushing: null
 };
+
 export default new Vuex.Store({
   state: initialState,
-  mutations: {
-    addPoint(state: State, point: Point) {
-      state.breakpoints.push(point as Breakpoint);
-    }
-  },
-  actions: {}
+  mutations: {},
+  actions
 });

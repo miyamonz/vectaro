@@ -1,12 +1,13 @@
 <template>
   <svg :width="width" :height="height">
-    <path :d="d" stroke="black" fill="transparent"/>
+    <path v-for=" path in paths"
+    :d="encodePath(path)" stroke="black" fill="transparent"/>
   </svg>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Point } from "@/types.ts";
+import { Point, BezierPath } from "@/types.ts";
 
 const encodePoints = (points: Point[]) => {
   if (points.length === 0) {
@@ -24,12 +25,12 @@ const encodePoints = (points: Point[]) => {
 };
 @Component
 export default class MainView extends Vue {
-  @Prop() private points!: Point[];
+  @Prop() private paths!: BezierPath[];
   @Prop() private width!: number;
   @Prop() private height!: number;
 
-  get d() {
-    return encodePoints(this.points);
+  public encodePath(path: BezierPath) {
+    return encodePoints(path.breakpoints);
   }
 }
 </script>
