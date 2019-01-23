@@ -16,8 +16,8 @@ const addBreakpoint = (path: BezierPath, point: Breakpoint) => {
 export const click = ({ state, getters }: Context, point: Point) => {
   const bp = {
     ...point,
-    startHandle: { x: point.x + 50, y: point.y },
-    endHandle: { x: point.x - 50, y: point.y }
+    startHandle: point,
+    endHandle: point
   };
 
   const { currentPath } = getters;
