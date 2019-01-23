@@ -1,20 +1,23 @@
 <template>
   <div>
-    <div class="canvases" :style="{width:width+'px', height:height+'px'}">
-      <PathRenderer v-bind="{width, height}"
+    <LayerContainer v-bind="{width, height}">
+      <PathRenderer 
+        v-bind="{width, height}"
       :paths="$store.state.paths"
       />
-      <InputHandler v-bind="{width, height}"
+      <InputHandler 
+        v-bind="{width, height}"
         @up="log"
         @down="down"
         @move="log"
       />
-    </div>
+    </LayerContainer>
     {{$store.state}}
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import LayerContainer from "@/components/LayerContainer.vue";
 import InputHandler from "@/components/InputHandler.vue";
 import PathRenderer from "@/components/PathRenderer.vue";
 
@@ -29,6 +32,7 @@ const getOffsetFromTouch = (touch: Touch) => {
 
 @Component({
   components: {
+    LayerContainer,
     InputHandler,
     PathRenderer
   }
@@ -45,15 +49,3 @@ export default class MainView extends Vue {
   }
 }
 </script>
-<style lang="scss">
-.canvases {
-  position: relative;
-  margin: 0 auto;
-  border: solid 1px;
-  & > * {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-}
-</style>
