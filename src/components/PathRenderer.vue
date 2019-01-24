@@ -1,8 +1,10 @@
 <template>
   <svg :width="width" :height="height">
-    <path v-for=" path in paths"
-    :d="encodePath(path)" stroke="black" fill="transparent"/>
-    <g v-for=" path, idx in paths">
+    <path v-for="path in paths" :key="path.name"
+      :d="encodePath(path)" stroke="black" fill="transparent"
+      :stroke-width=" hovering === path.name ? 3 : 1"
+    />
+    <g v-for="path, idx in paths" :key=" 'g-' + path.name">
       <g v-if="idx === $store.state.pushing" v-for=" bp in path.breakpoints">
       <circle :cx="bp.x"             :cy="bp.y"             r="5" />
       <circle :cx="bp.startHandle.x" :cy="bp.startHandle.y" r="2" />
@@ -43,6 +45,7 @@ export default class MainView extends Vue {
   @Prop() private paths!: BezierPath[];
   @Prop() private width!: number;
   @Prop() private height!: number;
+  @Prop() private hovering!: number | null;
 
   public encodePath(path: BezierPath) {
     return encodePath(path);

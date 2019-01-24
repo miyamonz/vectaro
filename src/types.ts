@@ -9,4 +9,5 @@ export interface Breakpoint extends Point {
 
 export interface BezierPath {
   breakpoints: Breakpoint[];
+  name: string;
 }

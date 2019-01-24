@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="main-view">
+    <PathMenu @hovering="hovering = $event"/>
     <LayerContainer v-bind="{width, height}">
       <PathRenderer 
         v-bind="{width, height}"
-      :paths="$store.state.paths"
+        :paths="$store.state.paths"
+        :hovering="hovering"
       />
       <InputHandler 
         v-bind="{width, height}"
@@ -12,17 +14,18 @@
         @move="move"
       />
     </LayerContainer>
-    {{$store.state}}
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import PathMenu from "@/components/PathMenu.vue";
 import LayerContainer from "@/components/LayerContainer.vue";
 import InputHandler from "@/components/InputHandler.vue";
 import PathRenderer from "@/components/PathRenderer.vue";
 
 @Component({
   components: {
+    PathMenu,
     LayerContainer,
     InputHandler,
     PathRenderer
@@ -33,6 +36,7 @@ export default class MainView extends Vue {
   private height: number = 500;
 
   private editing: boolean = false;
+  private hovering: string | null = null;
 
   public down(x: number, y: number) {
     this.editing = true;
@@ -47,3 +51,8 @@ export default class MainView extends Vue {
   }
 }
 </script>
+<style>
+.main-view {
+  display: flex;
+}
+</style>

@@ -5,12 +5,17 @@ interface Context {
   getters: any;
 }
 
-const createPathAndPushing = (state: State, bp: Breakpoint) => {
-  state.pushing = state.paths.length;
-  state.paths.push({ breakpoints: [bp] });
-};
 const addBreakpoint = (path: BezierPath, point: Breakpoint) => {
   path.breakpoints.push(point);
+};
+const createPathAndPushing = (state: State, bp: Breakpoint) => {
+  state.pushing = state.paths.length;
+  const newPath = {
+    breakpoints: [],
+    name: "path" + state.paths.length
+  };
+  state.paths.push(newPath);
+  addBreakpoint(state.paths[state.paths.length - 1], bp);
 };
 
 export const click = ({ state, getters }: Context, point: Point) => {
