@@ -22,7 +22,6 @@ export default class MainView extends Vue {
 <style lang="scss">
 .layers {
   position: relative;
-  margin: 0 auto;
   border: solid 1px;
   & > * {
     position: absolute;

@@ -1,6 +1,6 @@
 <template>
   <div class="main-view">
-    <PathMenu @hovering="hovering = $event"/>
+    <PathMenu @hovering="hovering = $event" style="width: 250px;"/>
     <LayerContainer v-bind="{width, height}">
       <PathRenderer 
         v-bind="{width, height}"
@@ -54,5 +54,6 @@ export default class MainView extends Vue {
 <style>
 .main-view {
   display: flex;
+  justify-content: center;
 }
 </style>
