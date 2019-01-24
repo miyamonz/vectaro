@@ -13,6 +13,7 @@
         :x1="bp.startHandle.x" :y1="bp.startHandle.y"
         :x2="bp.endHandle.x" :y2="bp.endHandle.y"
         style="stroke:gray"
+        stroke-dasharray="5"
         />
       </g>
     </g>
