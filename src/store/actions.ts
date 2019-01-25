@@ -9,11 +9,13 @@ interface Context {
 const addBreakpoint = (path: BezierPath, point: Breakpoint) => {
   path.breakpoints.push(point);
 };
+
+let i = 1;
 const createPathAndPushing = (state: State, bp: Breakpoint) => {
   state.pushing = state.paths.length;
   const newPath = {
     breakpoints: [],
-    name: "path" + state.paths.length
+    name: "path" + i++
   };
   state.paths.push(newPath);
   addBreakpoint(state.paths[state.paths.length - 1], bp);
