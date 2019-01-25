@@ -5,25 +5,18 @@
       :d="encodePath(path)" stroke="black" fill="transparent"
       :stroke-width=" hovering === path.name ? 3 : 1"
     />
-    <g v-for="path, idx in paths" :key=" 'g-' + path.name">
-      <g v-if="idx === $store.state.pushing" v-for=" bp in path.breakpoints">
-      <circle :cx="bp.x"             :cy="bp.y"             r="5" />
-      <circle :cx="bp.startHandle.x" :cy="bp.startHandle.y" r="2" />
-      <circle :cx="bp.endHandle.x"   :cy="bp.endHandle.y"   r="2" />
-      <line 
-        :x1="bp.startHandle.x" :y1="bp.startHandle.y"
-        :x2="bp.endHandle.x" :y2="bp.endHandle.y"
-        style="stroke:gray"
-        stroke-dasharray="5"
-        />
-      </g>
-    </g>
+    <BezierControlPoint
+      v-for="path, idx in paths" :key="path.name"
+      :path="path"
+      v-if="idx === $store.state.pushing"
+    />
   </svg>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Breakpoint, BezierPath } from "@/types.ts";
+import BezierControlPoint from "./BezierControlPoint.vue";
 
 const encodePath = (path: BezierPath) => {
   const bps = path.breakpoints;
@@ -42,7 +35,11 @@ const encodePath = (path: BezierPath) => {
 
   return d;
 };
-@Component
+@Component({
+  components: {
+    BezierControlPoint
+  }
+})
 export default class MainView extends Vue {
   @Prop() private paths!: BezierPath[];
   @Prop() private width!: number;
@@ -54,9 +51,3 @@ export default class MainView extends Vue {
   }
 }
 </script>
-<style lang="scss">
-svg circle {
-  stroke: black;
-  fill: none;
-}
-</style>
