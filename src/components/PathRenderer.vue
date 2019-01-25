@@ -1,6 +1,7 @@
 <template>
   <svg :width="width" :height="height">
     <path v-for="path in paths" :key="path.name"
+      :data-name="path.name"
       :d="encodePath(path)" stroke="black" fill="transparent"
       :stroke-width=" hovering === path.name ? 3 : 1"
     />
