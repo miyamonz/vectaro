@@ -1,3 +1,4 @@
+import Vue from "vue";
 import { State } from "@/store.ts";
 import { Point, Breakpoint, BezierPath } from "@/types.ts";
 interface Context {
@@ -51,6 +52,15 @@ export const setHandleToLastBp = (
   lastBreakpoint.endHandle = { x: 2 * x - point.x, y: 2 * y - point.y };
   return true;
 };
+
 export const exitDrawPath = ({ state }: Context) => {
   state.pushing = null;
+};
+
+export const deletePath = ({ state }: Context, name: string) => {
+  const idx = state.paths.findIndex(p => p.name === name);
+  Vue.delete(state.paths, idx);
+  if (state.pushing === idx) {
+    state.pushing = null;
+  }
 };

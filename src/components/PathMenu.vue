@@ -3,10 +3,11 @@
     <div class="path-item" v-for="path,i in $store.state.paths"
       :key="path.name"
       :class="{editing: i === $store.state.pushing}"
-      @mouseenter="enter(path.name, i)"
-      @mouseleave="leave(path.name, i)"
+      @mouseenter="enter(path.name)"
+      @mouseleave="leave(path.name)"
     >
       {{path.name}}
+      <button @click="deletePath(path.name)">x</button>
     </div>
   </div>
 </template>
@@ -15,15 +16,18 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class MainView extends Vue {
   private over: boolean = false;
-  private current: number = 0;
-  public enter(name: string, i: number) {
+  public enter(name: string) {
     this.over = true;
-    this.current = i;
     this.$emit("hovering", name);
   }
-  public leave(name: string, i: number) {
+  public leave(name: string) {
     this.over = false;
     this.$emit("hovering", null);
+  }
+
+  public deletePath(name: string) {
+    this.$store.dispatch("deletePath", name);
+    this.leave(name);
   }
 }
 </script>

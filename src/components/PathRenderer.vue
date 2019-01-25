@@ -6,7 +6,7 @@
       :stroke-width=" hovering === path.name ? 3 : 1"
     />
     <BezierControlPoint
-      v-for="path, idx in paths" :key="path.name"
+      v-for="path, idx in paths" :key="'control-'+path.name"
       :path="path"
       v-if="idx === $store.state.pushing"
     />
