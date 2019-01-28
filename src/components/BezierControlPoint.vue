@@ -1,16 +1,17 @@
 <template>
   <g class="control-points">
     <g v-for=" bp in path.breakpoints" :key="bp.x + ',' + bp.y">
-      <circle v-for="[key, obj] in Object.entries(attrsSet(bp))" 
-        @click="click(key, obj)"
-        :class="key" v-bind="{...obj}"
-      />
       <line 
         :x1="bp.startHandle.x" :y1="bp.startHandle.y"
         :x2="bp.endHandle.x" :y2="bp.endHandle.y"
         style="stroke:gray"
         stroke-dasharray="5"
         />
+      <circle v-for="[key, obj] in Object.entries(attrsSet(bp))" 
+        :key="key"
+        @click="click(key, obj)"
+        :class="[key, {adding : $store.state.editState.addingBreakpoint}]" v-bind="{...obj}"
+      />
     </g>
   </g>
 </template>
@@ -38,19 +39,25 @@ export default class BezierControlPoint extends Vue {
 <style lang="scss">
 .control-points circle {
   pointer-events: auto;
-  fill: none;
+  fill: black;
   stroke: black;
-  r: 7;
+  r: 3;
   &:hover {
     r: 20;
     stroke-width: 2;
   }
   &.startHandle {
-    r: 5;
+    fill: white;
+    r: 7;
     stroke: red;
   }
   &.endHandle {
-    r: 5;
+    fill: white;
+    r: 7;
+  }
+  &.adding {
+    r: 3;
+    stroke: black;
   }
 }
 </style>

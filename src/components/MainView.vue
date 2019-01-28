@@ -18,6 +18,12 @@
           @down="down"
           @move="move"
         />
+        <ControlPointsRenderer 
+          :style="{'z-index': $store.state.editState.addingBreakpoint ? -1 : 'auto'}"
+          v-bind="{width, height}"
+          v-if="$store.getters.currentPath"
+          :path="$store.getters.currentPath"
+        />
       </LayerContainer>
     </div>
   </div>
@@ -28,13 +34,15 @@ import PathMenu from "@/components/PathMenu.vue";
 import LayerContainer from "@/components/LayerContainer.vue";
 import InputHandler from "@/components/InputHandler.vue";
 import PathRenderer from "@/components/PathRenderer.vue";
+import ControlPointsRenderer from "@/components/ControlPointsRenderer.vue";
 
 @Component({
   components: {
     PathMenu,
     LayerContainer,
     InputHandler,
-    PathRenderer
+    PathRenderer,
+    ControlPointsRenderer
   }
 })
 export default class MainView extends Vue {
