@@ -62,14 +62,12 @@ export default class MainView extends Vue {
   private hovering: string | null = null;
 
   public down(x: number, y: number) {
-    this.$store.dispatch("updateEditState");
     this.$store.dispatch("click", { x, y });
   }
   get addingBreakpoint() {
     return this.$store.state.editState.addingBreakpoint;
   }
   public up(x: number, y: number) {
-    this.$store.dispatch("updateEditState");
     // up
     if (this.addingBreakpoint) {
       this.$store.dispatch("setHandleToLastBp", { x, y });

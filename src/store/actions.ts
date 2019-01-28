@@ -1,14 +1,10 @@
 import Vue from "vue";
 import { State } from "@/store.ts";
 import { Point, Breakpoint, BezierPath } from "@/types.ts";
-import hotkeys from "hotkeys-js";
 interface Context {
   state: State;
   getters: any;
 }
-
-// tslint:disable-next-line
-hotkeys("*", () => {});
 
 const addBreakpoint = (path: BezierPath, point: Breakpoint) => {
   path.breakpoints.push(point);
@@ -21,8 +17,8 @@ const createPathAndPushing = (state: State, bp: Breakpoint) => {
   addBreakpoint(state.paths[state.paths.length - 1], bp);
 };
 
-export const updateEditState = ({ state }: Context) => {
-  state.editState.addingBreakpoint = hotkeys.shift;
+export const updateEditState = ({ state }: Context, b: boolean) => {
+  state.editState.addingBreakpoint = b;
 };
 
 export const click = ({ state, getters }: Context, point: Point) => {
