@@ -10,14 +10,9 @@ const addBreakpoint = (path: BezierPath, point: Breakpoint) => {
   path.breakpoints.push(point);
 };
 
-let i = 1;
 const createPathAndPushing = (state: State, bp: Breakpoint) => {
   state.pushing = state.paths.length;
-  const newPath = {
-    breakpoints: [],
-    stroke: "black",
-    name: "path" + i++
-  };
+  const newPath = new BezierPath();
   state.paths.push(newPath);
   addBreakpoint(state.paths[state.paths.length - 1], bp);
 };

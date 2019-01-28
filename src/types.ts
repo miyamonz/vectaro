@@ -6,9 +6,4 @@ export interface Breakpoint extends Point {
   startHandle: Point;
   endHandle: Point;
 }
-
-export interface BezierPath {
-  breakpoints: Breakpoint[];
-  stroke: string;
-  name: string;
-}
+export { default as BezierPath } from "@/BezierPath.ts";
