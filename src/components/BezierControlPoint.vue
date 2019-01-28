@@ -43,21 +43,23 @@ export default class BezierControlPoint extends Vue {
   stroke: black;
   r: 3;
   &:hover {
-    r: 20;
-    stroke-width: 2;
+    r: 5;
+    stroke-width: 3;
+  }
+  &.startHandle,
+  &.endHandle {
+    &:hover {
+      stroke-width: 5;
+    }
+    fill: white;
+    r: 7;
   }
   &.startHandle {
-    fill: white;
-    r: 7;
     stroke: red;
   }
-  &.endHandle {
-    fill: white;
-    r: 7;
-  }
+
   &.adding {
-    r: 3;
-    stroke: black;
+    r: 0;
   }
 }
 </style>
