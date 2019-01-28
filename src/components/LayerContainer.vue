@@ -9,12 +9,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class MainView extends Vue {
-  private width: number = 500;
-  private height: number = 500;
   get style() {
+    const { width, height } = this.$store.state;
     return {
-      width: this.width + "px",
-      height: this.height + "px"
+      width: width + "px",
+      height: height + "px"
     };
   }
 }

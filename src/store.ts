@@ -6,11 +6,15 @@ import { BezierPath } from "@/types.ts";
 Vue.use(Vuex);
 
 export interface State {
+  width: number;
+  height: number;
   paths: BezierPath[];
   pushing: number | null;
 }
 
 const initialState: State = {
+  width: 500,
+  height: 500,
   paths: [],
   pushing: null
 };
@@ -20,6 +24,12 @@ export default new Vuex.Store({
   mutations: {
     setPushing(state: State, val: number | null) {
       state.pushing = val;
+    },
+    setWidth(state, val) {
+      state.width = val;
+    },
+    setHeight(state, val) {
+      state.height = val;
     }
   },
   getters: {
