@@ -11,13 +11,19 @@ export interface State {
   height: number;
   paths: BezierPath[];
   pushing: number | null;
+  editState: {
+    addingBreakpoint: boolean;
+  };
 }
 
 const initialState: State = {
   width: 500,
   height: 500,
   paths: [],
-  pushing: null
+  pushing: null,
+  editState: {
+    addingBreakpoint: false
+  }
 };
 
 export default new Vuex.Store({

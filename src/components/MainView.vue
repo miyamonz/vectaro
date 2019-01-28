@@ -51,19 +51,27 @@ export default class MainView extends Vue {
     this.$store.commit("setHeight", val);
   }
 
-  private editing: boolean = false;
   private hovering: string | null = null;
 
   public down(x: number, y: number) {
-    this.editing = true;
+    this.$store.dispatch("updateEditState");
     this.$store.dispatch("click", { x, y });
   }
+  get addingBreakpoint() {
+    return this.$store.state.editState.addingBreakpoint;
+  }
   public up(x: number, y: number) {
-    this.editing = false;
-    this.$store.dispatch("setHandleToLastBp", { x, y });
+    this.$store.dispatch("updateEditState");
+    // up
+    if (this.addingBreakpoint) {
+      this.$store.dispatch("setHandleToLastBp", { x, y });
+    }
   }
   public move(x: number, y: number) {
-    this.$store.dispatch("setHandleToLastBp", { x, y });
+    // move
+    if (this.addingBreakpoint) {
+      this.$store.dispatch("setHandleToLastBp", { x, y });
+    }
   }
 }
 </script>
