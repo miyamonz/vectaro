@@ -12,11 +12,8 @@
           :paths="$store.state.paths"
           :hovering="hovering"
         />
-        <InputHandler 
+        <MouseHandler 
           v-bind="{width, height}"
-          @up="up"
-          @down="down"
-          @move="move"
         />
         <ControlPointsRenderer 
           :style="{'z-index': $store.state.editState.addingBreakpoint ? -1 : 'auto'}"
@@ -32,7 +29,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import PathMenu from "@/components/PathMenu.vue";
 import LayerContainer from "@/components/LayerContainer.vue";
-import InputHandler from "@/components/InputHandler.vue";
+import MouseHandler from "@/components/MouseHandler.vue";
 import PathRenderer from "@/components/PathRenderer.vue";
 import ControlPointsRenderer from "@/components/ControlPointsRenderer.vue";
 
@@ -40,7 +37,7 @@ import ControlPointsRenderer from "@/components/ControlPointsRenderer.vue";
   components: {
     PathMenu,
     LayerContainer,
-    InputHandler,
+    MouseHandler,
     PathRenderer,
     ControlPointsRenderer
   }
@@ -60,25 +57,6 @@ export default class MainView extends Vue {
   }
 
   private hovering: string | null = null;
-
-  public down(x: number, y: number) {
-    this.$store.dispatch("click", { x, y });
-  }
-  get addingBreakpoint() {
-    return this.$store.state.editState.addingBreakpoint;
-  }
-  public up(x: number, y: number) {
-    // up
-    if (this.addingBreakpoint) {
-      this.$store.dispatch("setHandleToLastBp", { x, y });
-    }
-  }
-  public move(x: number, y: number) {
-    // move
-    if (this.addingBreakpoint) {
-      this.$store.dispatch("setHandleToLastBp", { x, y });
-    }
-  }
 }
 </script>
 <style>

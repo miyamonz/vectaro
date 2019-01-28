@@ -1,9 +1,11 @@
 <template>
-  <div :style="style"
+  <component :is="tag" :style="style"
     @mousemove="move($event.offsetX, $event.offsetY)" @touchmove="touchmove"
     @mousedown="down($event.offsetX, $event.offsetY)" @touchstart="touchstart"
     @mouseup="up($event.offsetX, $event.offsetY)"     @touchend="up"
-    ></div>
+    >
+    <slot />
+  </component>
 </template>
 <script lang="ts">
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
@@ -17,7 +19,11 @@ const getOffsetFromTouch = (touch: Touch) => {
   };
 };
 
-@Component
+@Component({
+  props: {
+    tag: { default: "div" }
+  }
+})
 export default class InputHandler extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
