@@ -12,6 +12,11 @@ export interface State {
   paths: BezierPath[];
   pushing: number | null;
   editState: {
+    grab: null | {
+      name: string;
+      idx: number;
+      pointType: "breakpoint" | "startHandle" | "endHandle";
+    };
     addingBreakpoint: boolean;
   };
 }
@@ -22,7 +27,8 @@ const initialState: State = {
   paths: [],
   pushing: null,
   editState: {
-    addingBreakpoint: false
+    addingBreakpoint: false,
+    grab: null
   }
 };
 

@@ -38,6 +38,33 @@ export const click = ({ state, getters }: Context, point: Point) => {
     addBreakpoint(currentPath, bp);
   }
 };
+export const setGrab = ({ state }: Context, g: any) => {
+  console.log(g);
+  state.editState.grab = g;
+};
+
+export const setPosOnGrab = ({ state }: Context, point: Point) => {
+  const { grab } = state.editState;
+  if (grab === null) {
+    return;
+  }
+
+  const path = state.paths.find(p => p.name === grab.name);
+  if (!path) {
+    return;
+  }
+  const bp = path.breakpoints[grab.idx];
+
+  switch (grab.pointType) {
+    case "startHandle":
+      bp.startHandle = point;
+      break;
+    case "endHandle":
+      bp.endHandle = point;
+      break;
+  }
+};
+
 export const setHandleToLastBp = (
   { state, getters }: Context,
   point: Point
