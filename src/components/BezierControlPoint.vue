@@ -18,7 +18,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { Breakpoint, BezierPath } from "@/types.ts";
 @Component
 export default class BezierControlPoint extends Vue {
-  @Prop() private path!: BezierPath[];
+  @Prop() private path!: BezierPath;
 }
 </script>
 <style lang="scss">
