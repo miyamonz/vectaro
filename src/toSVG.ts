@@ -8,9 +8,7 @@ export default (state: State) => {
       return `<path d="${encodePath(path)}" stroke="${path.stroke}"/>`;
     })
     .join("\n");
-  const str = `
-  <svg xmlns="http://www.w3.org/2000/svg">
-    ${paths}
-  </svg>`;
-  return str;
+  const str = `<svg xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
+  // @ts-ignore
+  return prettier.format(str, { parser: "html", plugins: prettierPlugins });
 };

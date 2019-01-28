@@ -6,9 +6,7 @@
     </div>
     <router-view/>
       <ButtonDownload />
-      <pre style="text-align:left">
-        {{$store.getters.getSVG}}
-      </pre>
+      <pre style="text-align:left">{{$store.getters.getSVG}}</pre>
   </div>
 </template>
 <script lang="ts">
