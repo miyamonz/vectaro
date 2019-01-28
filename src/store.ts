@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import * as actions from "@/store/actions.ts";
 import { BezierPath } from "@/types.ts";
 
+import getSVG from "@/toSVG.ts";
 Vue.use(Vuex);
 
 export interface State {
@@ -38,7 +39,8 @@ export default new Vuex.Store({
         return null;
       }
       return state.paths[state.pushing];
-    }
+    },
+    getSVG
   },
   actions
 });
