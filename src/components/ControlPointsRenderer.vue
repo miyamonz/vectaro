@@ -38,9 +38,6 @@ export default class MainView extends Vue {
   }
   public move(x: number, y: number) {
     // move
-    if (this.$store.state.editState.grab) {
-      this.$store.dispatch("setPosOnGrab", { x, y });
-    }
   }
 }
 </script>
