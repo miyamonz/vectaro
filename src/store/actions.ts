@@ -15,6 +15,7 @@ const createPathAndPushing = (state: State, bp: Breakpoint) => {
   state.pushing = state.paths.length;
   const newPath = {
     breakpoints: [],
+    stroke: "black",
     name: "path" + i++
   };
   state.paths.push(newPath);

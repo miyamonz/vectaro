@@ -5,9 +5,18 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+      <ButtonDownload />
+      <pre style="text-align:left">
+        {{$store.getters.getSVG}}
+      </pre>
   </div>
 </template>
-
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import ButtonDownload from "@/components/ButtonDownload.vue";
+@Component({ components: { ButtonDownload } })
+export default class App extends Vue {}
+</script>
 <style lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
