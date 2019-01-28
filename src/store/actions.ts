@@ -62,6 +62,10 @@ export const setPosOnGrab = ({ state }: Context, point: Point) => {
     case "endHandle":
       bp.endHandle = point;
       break;
+    case "breakpoint":
+      bp.x = point.x;
+      bp.y = point.y;
+      break;
   }
 };
 
