@@ -7,6 +7,9 @@
     <div class="path-edit" >
       <PathMenu @hovering="hovering = $event" style="width: 250px;"/>
       <LayerContainer v-bind="{width, height}">
+        <GridRenderer 
+          v-bind="{width, height}"
+        />
         <PathRenderer 
           v-bind="{width, height}"
           :paths="$store.state.paths"
@@ -30,6 +33,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import PathMenu from "@/components/PathMenu.vue";
 import LayerContainer from "@/components/LayerContainer.vue";
 import MouseHandler from "@/components/MouseHandler.vue";
+import GridRenderer from "@/components/GridRenderer.vue";
 import PathRenderer from "@/components/PathRenderer.vue";
 import ControlPointsRenderer from "@/components/ControlPointsRenderer.vue";
 
@@ -38,6 +42,7 @@ import ControlPointsRenderer from "@/components/ControlPointsRenderer.vue";
     PathMenu,
     LayerContainer,
     MouseHandler,
+    GridRenderer,
     PathRenderer,
     ControlPointsRenderer
   }
