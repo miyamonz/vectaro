@@ -39,7 +39,6 @@ export const click = ({ state, getters }: Context, point: Point) => {
   }
 };
 export const setGrab = ({ state }: Context, g: any) => {
-  console.log(g);
   state.editState.grab = g;
 };
 
