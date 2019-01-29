@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <button @click= "fullscreen" >fullscreen</button>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -15,6 +16,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import ButtonDownload from "@/components/ButtonDownload.vue";
 @Component({ components: { ButtonDownload } })
 export default class App extends Vue {
+  public fullscreen() {
+    document.fullscreen
+      ? document.webkitCancelFullScreen()
+      : document.body.requestFullscreen();
+  }
   get adding() {
     return this.$store.state.editState.addingBreakpoint;
   }
