@@ -2,7 +2,7 @@
   <component :is="tag" :style="style"
     @mousemove="move($event.offsetX, $event.offsetY)" @touchmove="touchmove"
     @mousedown="down($event.offsetX, $event.offsetY)" @touchstart="touchstart"
-    @mouseup="up($event.offsetX, $event.offsetY)"     @touchend="up"
+    @mouseup="up($event.offsetX, $event.offsetY)"     @touchend="touchend"
     >
     <slot />
   </component>
@@ -62,6 +62,11 @@ export default class InputHandler extends Vue {
     const touch = e.changedTouches[0];
     const { x, y } = getOffsetFromTouch(touch);
     this.move(x, y);
+  }
+  public touchend(e: TouchEvent) {
+    const touch = e.changedTouches[0];
+    const { x, y } = getOffsetFromTouch(touch);
+    this.up(x, y);
   }
   public mousedown(e: MouseEvent) {
     this.down(e.offsetX, e.offsetY);

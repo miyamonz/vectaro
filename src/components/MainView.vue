@@ -67,6 +67,7 @@ export default class MainView extends Vue {
 <style>
 .path-edit {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 </style>

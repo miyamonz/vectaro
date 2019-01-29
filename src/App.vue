@@ -5,6 +5,7 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+      <input v-model="adding" type="checkbox">
       <ButtonDownload />
       <pre style="text-align:left">{{$store.getters.getSVG}}</pre>
   </div>
@@ -13,7 +14,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ButtonDownload from "@/components/ButtonDownload.vue";
 @Component({ components: { ButtonDownload } })
-export default class App extends Vue {}
+export default class App extends Vue {
+  get adding() {
+    return this.$store.state.editState.addingBreakpoint;
+  }
+  set adding(b: boolean) {
+    this.$store.dispatch("updateEditState", b);
+  }
+}
 </script>
 <style lang="scss">
 #app {
