@@ -22,13 +22,14 @@ export interface State {
   };
 }
 
+const vmin: number = Math.min(700, window.innerWidth, window.innerHeight);
 const initialState: State = {
-  width: 500,
-  height: 500,
+  width: vmin,
+  height: vmin,
   paths: [],
   pushing: null,
   editState: {
-    viewbox: [0, 0, 500, 500],
+    viewbox: [0, 0, vmin, vmin],
     addingBreakpoint: false,
     grab: null
   }
