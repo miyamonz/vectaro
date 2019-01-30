@@ -33,8 +33,17 @@ export default class MouseHandler extends Vue {
     this.$el.addEventListener("wheel", listener as EventListener);
   }
 
+  public cameraToWorld(x: number, y: number) {
+    const viewbox = this.$store.state.editState.viewbox;
+    const [vx, vy, vw, vh] = viewbox;
+    return {
+      x: vx + (x * vw) / this.width,
+      y: vy + (y * vh) / this.height
+    };
+  }
   public down(x: number, y: number) {
-    this.$store.dispatch("click", { x, y });
+    const pos = this.cameraToWorld(x, y);
+    this.$store.dispatch("click", pos);
   }
   get addingBreakpoint() {
     return this.$store.state.editState.addingBreakpoint;
@@ -42,13 +51,15 @@ export default class MouseHandler extends Vue {
   public up(x: number, y: number) {
     // up
     if (this.addingBreakpoint) {
-      this.$store.dispatch("setHandleToLastBp", { x, y });
+      const pos = this.cameraToWorld(x, y);
+      this.$store.dispatch("setHandleToLastBp", pos);
     }
   }
   public move(x: number, y: number) {
     // move
     if (this.addingBreakpoint) {
-      this.$store.dispatch("setHandleToLastBp", { x, y });
+      const pos = this.cameraToWorld(x, y);
+      this.$store.dispatch("setHandleToLastBp", pos);
     }
   }
 }
