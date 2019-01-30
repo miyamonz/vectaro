@@ -12,7 +12,7 @@ window.onkeydown = (e: KeyboardEvent) => {
   if (e.key === "Shift") {
     store.dispatch("updateEditState", true);
   }
-  if (e.key === "Escape") {
+  if (e.key === "Escape" || e.key === "Enter") {
     store.dispatch("exitDrawPath");
   }
 };
