@@ -1,14 +1,12 @@
 <template>
-  <svg :width="width" :height="height"
-    :viewBox="$store.getters.viewbox"
-    >
+  <svg :width="width" :height="height">
     <g v-for="x in xs" :key="'x-' + x">
-      <line :x1="x" :y1="0" :x2="x"     :y2="height"/>
-      <text :x="x" :y="10" >{{x}}</text>
+      <line :x1="mapX(x)" :y1="0" :x2="mapX(x)"     :y2="height"/>
+      <text :x="mapX(x)" :y="10" >{{x}}</text>
     </g>
     <g v-for="y in ys" :key="'y-' + y">
-      <line :x1="0" :y1="y" :x2="width" :y2="y"/>
-      <text :x="0" :y="y" >{{y}}</text>
+      <line :x1="0" :y1="mapY(y)" :x2="width" :y2="mapY(y)"/>
+      <text :x="0" :y="mapY(y)" >{{y}}</text>
     </g>
   </svg>
 </template>
@@ -18,6 +16,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { Breakpoint, BezierPath } from "@/types.ts";
 import BezierControlPoint from "./BezierControlPoint.vue";
 
+const range = (length: number) => Array.from({ length }, (_, i) => i);
 @Component({
   components: {
     BezierControlPoint
@@ -27,11 +26,31 @@ export default class MainView extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
 
+  get viewbox() {
+    return this.$store.state.editState.viewbox;
+  }
+  public mapX(x: number) {
+    const [vx, vy, vw, vh] = this.viewbox;
+    return ((x - vx) / vw) * this.width;
+  }
+  public mapY(y: number) {
+    const [vx, vy, vw, vh] = this.viewbox;
+    return ((y - vy) / vh) * this.height;
+  }
+
   get xs() {
-    return [0, 100, 200, 300];
+    const [x, y, w, h] = this.viewbox;
+    const unit = 100;
+    const min = Math.floor(x / unit) * unit;
+    const num = Math.ceil(w / unit) + 1;
+    return range(num).map(i => min + i * unit);
   }
   get ys() {
-    return [0, 100, 200, 300];
+    const [x, y, w, h] = this.viewbox;
+    const unit = 100;
+    const min = Math.floor(y / unit) * unit;
+    const num = Math.ceil(h / unit) + 1;
+    return range(num).map(i => min + i * unit);
   }
 }
 </script>
