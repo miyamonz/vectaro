@@ -6,11 +6,6 @@
       v-bind="{...path.attrs}"
       :stroke-width=" path.strokeWidth + (hovering === path.name ? 3 : 0) "
     />
-    <BezierControlPoint
-      v-for="path, idx in paths" :key="'control-'+path.name"
-      :path="path"
-      v-if="idx === $store.state.pushing"
-    />
   </svg>
 </template>
 
