@@ -7,6 +7,7 @@
     </div>
     <router-view/>
       <input v-model="adding" type="checkbox">
+      <button @click="$store.commit('setViewbox', [0,0,500,500])">reset viewport</button>
       <ButtonDownload />
       <pre style="text-align:left">{{$store.getters.getSVG}}</pre>
   </div>
