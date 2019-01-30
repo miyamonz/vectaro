@@ -6,6 +6,7 @@
   style="pointer-events:none"
   @up="up"
   @move="move"
+  :viewBox="$store.getters.viewbox"
   >
     <BezierControlPoint :path="path"
       @downPoint="downPoint"

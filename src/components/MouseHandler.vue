@@ -15,6 +15,24 @@ export default class MouseHandler extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
 
+  public mounted() {
+    const listener = (e: WheelEvent) => {
+      e.preventDefault();
+      const viewbox = this.$store.state.editState.viewbox;
+      if (e.ctrlKey) {
+        // zoom
+        viewbox[2] += e.deltaY;
+        viewbox[3] += e.deltaY;
+      } else {
+        // swipe
+        viewbox[0] += e.deltaX;
+        viewbox[1] += e.deltaY;
+      }
+      this.$store.commit("setViewbox", viewbox);
+    };
+    this.$el.addEventListener("wheel", listener as EventListener);
+  }
+
   public down(x: number, y: number) {
     this.$store.dispatch("click", { x, y });
   }

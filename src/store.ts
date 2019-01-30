@@ -12,6 +12,7 @@ export interface State {
   paths: BezierPath[];
   pushing: number | null;
   editState: {
+    viewbox: [number, number, number, number];
     grab: null | {
       name: string;
       idx: number;
@@ -27,6 +28,7 @@ const initialState: State = {
   paths: [],
   pushing: null,
   editState: {
+    viewbox: [0, 0, 500, 500],
     addingBreakpoint: false,
     grab: null
   }
@@ -43,6 +45,11 @@ export default new Vuex.Store({
     },
     setHeight(state, val) {
       state.height = val;
+    },
+    setViewbox(state, arr: [number, number, number, number]) {
+      for (let i = 0; i < 4; i++) {
+        Vue.set(state.editState.viewbox, i, arr[i]);
+      }
     }
   },
   getters: {
@@ -51,6 +58,9 @@ export default new Vuex.Store({
         return null;
       }
       return state.paths[state.pushing];
+    },
+    viewbox(state: State) {
+      return state.editState.viewbox.join(" ");
     },
     getSVG
   },

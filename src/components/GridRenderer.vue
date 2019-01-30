@@ -1,5 +1,7 @@
 <template>
-  <svg :width="width" :height="height">
+  <svg :width="width" :height="height"
+    :viewBox="$store.getters.viewbox"
+    >
     <g v-for="x in xs" :key="'x-' + x">
       <line :x1="x" :y1="0" :x2="x"     :y2="height"/>
       <text :x="x" :y="10" >{{x}}</text>

@@ -1,5 +1,7 @@
 <template>
-  <svg :width="width" :height="height">
+  <svg :width="width" :height="height" 
+    :viewBox="$store.getters.viewbox"
+    >
     <path v-for="path in paths" :key="path.name"
       v-bind="{...path.attrs}"
       :stroke-width=" path.strokeWidth + (hovering === path.name ? 3 : 0) "
