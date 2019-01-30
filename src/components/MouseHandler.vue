@@ -21,12 +21,13 @@ export default class MouseHandler extends Vue {
       const viewbox = this.$store.state.editState.viewbox;
       if (e.ctrlKey) {
         // zoom
-        viewbox[2] += e.deltaY;
-        viewbox[3] += e.deltaY;
+        viewbox[2] *= 1 + e.deltaY * 0.005;
+        viewbox[3] *= 1 + e.deltaY * 0.005;
       } else {
         // swipe
-        viewbox[0] += e.deltaX;
-        viewbox[1] += e.deltaY;
+        const scale = viewbox[2] / this.width;
+        viewbox[0] += e.deltaX * scale;
+        viewbox[1] += e.deltaY * scale;
       }
       this.$store.commit("setViewbox", viewbox);
     };
