@@ -4,7 +4,7 @@
     >
     <path v-for="path in paths" :key="path.name"
       v-bind="{...path.attrs}"
-      :stroke-width=" path.strokeWidth + (hovering === path.name ? 3 : 0) "
+      :stroke-width=" path.strokeWidth"
     />
   </svg>
 </template>
