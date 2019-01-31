@@ -1,11 +1,11 @@
 <template>
   <svg :width="width" :height="height">
     <g v-for="x in xs" :key="'x-' + x">
-      <line :x1="mapX(x)" :y1="0" :x2="mapX(x)"     :y2="height"/>
+      <line v-if="showLine" :x1="mapX(x)" :y1="0" :x2="mapX(x)"     :y2="height"/>
       <text :x="mapX(x)" :y="10" >{{x}}</text>
     </g>
     <g v-for="y in ys" :key="'y-' + y">
-      <line :x1="0" :y1="mapY(y)" :x2="width" :y2="mapY(y)"/>
+      <line v-if="showLine" :x1="0" :y1="mapY(y)" :x2="width" :y2="mapY(y)"/>
       <text :x="0" :y="mapY(y)" >{{y}}</text>
     </g>
   </svg>
@@ -51,6 +51,10 @@ export default class MainView extends Vue {
     const min = Math.floor(y / unit) * unit;
     const num = Math.ceil(h / unit) + 1;
     return range(num).map(i => min + i * unit);
+  }
+
+  get showLine() {
+    return this.$store.state.editState.showLine;
   }
 }
 </script>
