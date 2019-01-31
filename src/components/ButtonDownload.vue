@@ -6,7 +6,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class ButtonDownload extends Vue {
   get uri(): string {
-    const svg = this.$store.getters.getSVG;
+    const svg = this.$store.getters.toSVG;
     return `data://text/html,${svg}`;
   }
 }

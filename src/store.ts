@@ -2,7 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import * as actions from "@/store/actions.ts";
 
-import getSVG from "@/toSVG.ts";
+import { toSVG } from "@/util";
+
 Vue.use(Vuex);
 
 export interface State {
@@ -65,7 +66,7 @@ export default new Vuex.Store({
     viewbox(state: State) {
       return state.editState.viewbox.join(" ");
     },
-    getSVG
+    toSVG
   },
   actions
 });
