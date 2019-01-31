@@ -5,7 +5,10 @@
       height:<input type="number" v-model="height"/>
     </div>
     <div class="path-edit" >
-      <PathMenu @hovering="hovering = $event" style="width: 250px;"/>
+      <div class="side-menu">
+        <PathMenu v-if="$store.getters.currentPath === null" @hovering="hovering = $event" />
+        <PathAttrEditor v-else :path="$store.getters.currentPath"/>
+      </div>
       <LayerContainer v-bind="{width, height}">
         <GridRenderer 
           v-bind="{width, height}"
@@ -31,6 +34,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import PathMenu from "@/components/PathMenu.vue";
+import PathAttrEditor from "@/components/PathAttrEditor.vue";
 import LayerContainer from "@/components/LayerContainer.vue";
 import MouseHandler from "@/components/MouseHandler.vue";
 import GridRenderer from "@/components/GridRenderer.vue";
@@ -39,6 +43,7 @@ import ControlPointsRenderer from "@/components/ControlPointsRenderer.vue";
 
 @Component({
   components: {
+    PathAttrEditor,
     PathMenu,
     LayerContainer,
     MouseHandler,
@@ -67,7 +72,10 @@ export default class MainView extends Vue {
 <style>
 .path-edit {
   display: flex;
-  flex-direction: column;
   justify-content: center;
+}
+.side-menu {
+  width: 250px;
+  overflow: hidden;
 }
 </style>

@@ -11,10 +11,14 @@ export default class BezierPath {
     this.name = "path" + i++;
   }
 
+  public pathStr(): string {
+    return encodePath(this);
+  }
+
   get attrs(): object {
     return {
       "data-name": this.name,
-      d: encodePath(this),
+      d: this.pathStr(),
       stroke: this.stroke,
       "stroke-width": this.strokeWidth,
       fill: this.fill
