@@ -4,24 +4,18 @@ import { Point, Breakpoint, BezierPath } from "@/types.ts";
 interface Context {
   state: State;
   getters: any;
+  commit: any;
 }
 
 const addBreakpoint = (path: BezierPath, point: Breakpoint) => {
   path.breakpoints.push(point);
 };
 
-const createPathAndPushing = (state: State, bp: Breakpoint) => {
-  state.pushing = state.paths.length;
-  const newPath = new BezierPath();
-  state.paths.push(newPath);
-  addBreakpoint(state.paths[state.paths.length - 1], bp);
-};
-
 export const updateEditState = ({ state }: Context, b: boolean) => {
   state.editState.addingBreakpoint = b;
 };
 
-export const click = ({ state, getters }: Context, point: Point) => {
+export const click = ({ state, getters, commit }: Context, point: Point) => {
   if (!state.editState.addingBreakpoint) {
     return;
   }
@@ -33,7 +27,10 @@ export const click = ({ state, getters }: Context, point: Point) => {
 
   const { currentPath } = getters;
   if (currentPath === null) {
-    createPathAndPushing(state, bp);
+    commit("setCurrentPathIndex", state.paths.length);
+    const newPath = new BezierPath();
+    state.paths.push(newPath);
+    addBreakpoint(state.paths[state.paths.length - 1], bp);
   } else {
     addBreakpoint(currentPath, bp);
   }
@@ -87,14 +84,18 @@ export const setHandleToLastBp = (
   return true;
 };
 
-export const exitDrawPath = ({ state }: Context) => {
-  state.pushing = null;
+export const exitDrawPath = ({ commit }: Context) => {
+  commit("setCurrentPathIndex", null);
 };
 
-export const deletePath = ({ state }: Context, name: string) => {
+export const deletePath = (
+  { state, getters, commit }: Context,
+  name: string
+) => {
   const idx = state.paths.findIndex(p => p.name === name);
   Vue.delete(state.paths, idx);
-  if (state.pushing === idx) {
-    state.pushing = null;
+  const currentPathIndex = getters;
+  if (currentPathIndex === idx) {
+    commit("setCurrentPathIndex", null);
   }
 };

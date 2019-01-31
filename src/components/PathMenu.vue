@@ -2,7 +2,7 @@
   <div class="path-menu">
     <div class="path-item" v-for="path,i in $store.state.paths"
       :key="path.name"
-      :class="{editing: i === $store.state.pushing}"
+      :class="{editing: i === $store.getters.currentPathIndex}"
       @mouseenter="enter(path.name)"
       @mouseleave="leave(path.name)"
     >

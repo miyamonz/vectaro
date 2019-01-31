@@ -10,8 +10,8 @@ export interface State {
   width: number;
   height: number;
   paths: BezierPath[];
-  pushing: number | null;
   editState: {
+    currentPathIndex: number | null;
     viewbox: [number, number, number, number];
     grab: null | {
       name: string;
@@ -27,8 +27,8 @@ const initialState: State = {
   width: vmin,
   height: vmin,
   paths: [],
-  pushing: null,
   editState: {
+    currentPathIndex: null,
     viewbox: [0, 0, vmin, vmin],
     addingBreakpoint: false,
     grab: null
@@ -38,8 +38,8 @@ const initialState: State = {
 export default new Vuex.Store({
   state: initialState,
   mutations: {
-    setPushing(state: State, val: number | null) {
-      state.pushing = val;
+    setCurrentPathIndex(state: State, val: number | null) {
+      state.editState.currentPathIndex = val;
     },
     setWidth(state, val) {
       state.width = val;
@@ -55,10 +55,13 @@ export default new Vuex.Store({
   },
   getters: {
     currentPath(state: State) {
-      if (state.pushing === null) {
+      if (state.editState.currentPathIndex === null) {
         return null;
       }
-      return state.paths[state.pushing];
+      return state.paths[state.editState.currentPathIndex];
+    },
+    currentPathIndex(state) {
+      return state.editState.currentPathIndex;
     },
     viewbox(state: State) {
       return state.editState.viewbox.join(" ");
