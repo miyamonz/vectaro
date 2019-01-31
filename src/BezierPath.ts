@@ -1,4 +1,3 @@
-import { Breakpoint } from "@/types.ts";
 import { encodePath } from "@/util.ts";
 
 let i = 1;
@@ -12,7 +11,7 @@ export default class BezierPath {
     this.name = "path" + i++;
   }
 
-  get attrs() {
+  get attrs(): object {
     return {
       "data-name": this.name,
       d: encodePath(this),

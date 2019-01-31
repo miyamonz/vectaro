@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { State } from "@/store.ts";
-import { Point, Breakpoint, BezierPath } from "@/types.ts";
+import BezierPath from "@/BezierPath";
 interface Context {
   state: State;
   getters: any;

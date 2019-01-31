@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Breakpoint, BezierPath } from "@/types.ts";
 import BezierControlPoint from "./BezierControlPoint.vue";
 import tmpState from "@/tmpState.ts";
 

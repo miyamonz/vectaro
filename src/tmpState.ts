@@ -1,5 +1,4 @@
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
-import { Point } from "@/types.ts";
 import store from "@/store";
 
 const initial = Object.assign([], store.state.editState.viewbox);

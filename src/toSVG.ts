@@ -1,4 +1,3 @@
-import { BezierPath } from "@/types.ts";
 import { State } from "@/store.ts";
 import { encodePath } from "@/util.ts";
 

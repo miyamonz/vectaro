@@ -1,4 +1,3 @@
-import { BezierPath } from "@/types.ts";
 export const encodePath = (path: BezierPath) => {
   const bps = path.breakpoints;
   if (bps.length === 0) {

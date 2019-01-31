@@ -11,7 +11,6 @@ import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 import InputHandler from "@/components/InputHandler.vue";
 import tmpState from "@/tmpState.ts";
 
-import { Point } from "@/types.ts";
 import { debounce } from "@/util.ts";
 const debounceCommit = debounce(() => tmpState.commit());
 
