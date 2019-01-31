@@ -5,6 +5,7 @@
       :class="{editing: i === $store.getters.currentPathIndex}"
       @mouseenter="enter(path.name)"
       @mouseleave="leave(path.name)"
+      @click="select(path.name)"
     >
       {{path.name}}
       <button @click="deletePath(path.name)">x</button>
@@ -23,6 +24,12 @@ export default class MainView extends Vue {
   public leave(name: string) {
     this.over = false;
     this.$emit("hovering", null);
+  }
+
+  public select(name: string) {
+    const paths: BezierPath[] = this.$store.state.paths;
+    const idx = paths.findIndex(p => p.name === name);
+    this.$store.commit("setCurrentPathIndex", idx);
   }
 
   public deletePath(name: string) {
