@@ -11,6 +11,7 @@ import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 import InputHandler from "@/components/InputHandler.vue";
 import tmpState from "@/tmpState.ts";
 
+import { Point } from "@/types.ts";
 import { debounce } from "@/util.ts";
 const debounceCommit = debounce(() => tmpState.commit());
 
@@ -18,6 +19,8 @@ const debounceCommit = debounce(() => tmpState.commit());
 export default class MouseHandler extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
+
+  private mouse: Point = { x: 0, y: 0 };
 
   get viewbox() {
     return tmpState.viewbox;
@@ -27,27 +30,18 @@ export default class MouseHandler extends Vue {
       e.preventDefault();
       if (e.ctrlKey) {
         // zoom
-        const scale = e.deltaY * 0.005;
-        tmpState.w *= 1 + scale;
-        tmpState.h *= 1 + scale;
+        tmpState.zoom(e.deltaX, e.deltaY, this.mouse);
       } else {
-        // swipe
-        const scale = tmpState.w / this.width;
-        tmpState.x += e.deltaX * scale;
-        tmpState.y += e.deltaY * scale;
+        // scale
+        tmpState.scroll(e.deltaX, e.deltaY);
       }
-      // this.$store.commit("setViewbox", viewbox);
       debounceCommit();
     };
     this.$el.addEventListener("wheel", listener as EventListener);
   }
 
   public cameraToWorld(x: number, y: number) {
-    const [vx, vy, vw, vh] = this.viewbox;
-    return {
-      x: vx + (x * vw) / this.width,
-      y: vy + (y * vh) / this.height
-    };
+    return tmpState.cameraToWorld({ x, y });
   }
   public down(x: number, y: number) {
     const pos = this.cameraToWorld(x, y);
@@ -63,9 +57,13 @@ export default class MouseHandler extends Vue {
       this.$store.dispatch("setHandleToLastBp", pos);
     }
   }
-  public move(x: number, y: number) {
+
+  public move(x: number, y: number, down: boolean) {
     // move
-    if (this.addingBreakpoint) {
+    Vue.set(this.mouse, "x", x);
+    Vue.set(this.mouse, "y", y);
+
+    if (down && this.addingBreakpoint) {
       const pos = this.cameraToWorld(x, y);
       this.$store.dispatch("setHandleToLastBp", pos);
     }

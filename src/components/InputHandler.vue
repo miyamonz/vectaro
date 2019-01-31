@@ -37,9 +37,7 @@ export default class InputHandler extends Vue {
     };
   }
   public move(x: number, y: number) {
-    if (this.before) {
-      this.$emit("move", x, y);
-    }
+    this.$emit("move", x, y, this.before);
     // control pointをgrabしてれば動かす
     if (this.$store.state.editState.grab) {
       this.$store.dispatch("setPosOnGrab", { x, y });
