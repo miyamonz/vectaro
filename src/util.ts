@@ -16,3 +16,26 @@ export const encodePath = (path: BezierPath) => {
 
   return d;
 };
+
+export const toggleFullscreen = () => {
+  if (document.fullscreen) {
+    // @ts-ignore
+    document.webkitCancelFullScreen();
+  } else {
+    document.body.requestFullscreen();
+  }
+};
+
+export const debounce = (fn: any) => {
+  let isRunning = false;
+  return (...arg: any[]) => {
+    if (isRunning) {
+      return;
+    }
+    isRunning = true;
+    window.requestAnimationFrame(() => {
+      fn(...arg);
+      isRunning = false;
+    });
+  };
+};

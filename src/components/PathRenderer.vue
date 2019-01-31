@@ -1,6 +1,6 @@
 <template>
   <svg :width="width" :height="height" 
-    :viewBox="$store.getters.viewbox"
+    :viewBox="viewbox"
     >
     <path v-for="path in paths" :key="path.name"
       v-bind="{...path.attrs}"
@@ -13,6 +13,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Breakpoint, BezierPath } from "@/types.ts";
 import BezierControlPoint from "./BezierControlPoint.vue";
+import tmpState from "@/tmpState.ts";
 
 @Component({
   components: {
@@ -24,5 +25,8 @@ export default class MainView extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
   @Prop() private hovering!: number | null;
+  get viewbox() {
+    return tmpState.viewbox;
+  }
 }
 </script>

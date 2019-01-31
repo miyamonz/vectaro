@@ -15,12 +15,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ButtonDownload from "@/components/ButtonDownload.vue";
+import { toggleFullscreen } from "@/util.ts";
+
 @Component({ components: { ButtonDownload } })
 export default class App extends Vue {
   public fullscreen() {
-    document.fullscreen
-      ? document.webkitCancelFullScreen()
-      : document.body.requestFullscreen();
+    toggleFullscreen();
   }
   get adding() {
     return this.$store.state.editState.addingBreakpoint;

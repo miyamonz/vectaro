@@ -6,7 +6,7 @@
   style="pointer-events:none"
   @up="up"
   @move="move"
-  :viewBox="$store.getters.viewbox"
+  :viewBox="viewbox"
   >
     <BezierControlPoint :path="path"
       @downPoint="downPoint"
@@ -19,6 +19,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { Breakpoint, BezierPath } from "@/types.ts";
 import InputHandler from "./InputHandler.vue";
 import BezierControlPoint from "./BezierControlPoint.vue";
+import tmpState from "@/tmpState.ts";
 
 @Component({
   components: {
@@ -31,6 +32,9 @@ export default class MainView extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
 
+  get viewbox() {
+    return tmpState.viewbox;
+  }
   public downPoint(grab: object) {
     this.$store.dispatch("setGrab", grab);
   }

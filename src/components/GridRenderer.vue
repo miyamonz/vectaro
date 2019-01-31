@@ -15,6 +15,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Breakpoint, BezierPath } from "@/types.ts";
 import BezierControlPoint from "./BezierControlPoint.vue";
+import tmpState from "@/tmpState.ts";
 
 const range = (length: number) => Array.from({ length }, (_, i) => i);
 @Component({
@@ -27,7 +28,7 @@ export default class MainView extends Vue {
   @Prop() private height!: number;
 
   get viewbox() {
-    return this.$store.state.editState.viewbox;
+    return tmpState.viewbox;
   }
   public mapX(x: number) {
     const [vx, vy, vw, vh] = this.viewbox;
