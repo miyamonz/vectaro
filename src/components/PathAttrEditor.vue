@@ -3,10 +3,10 @@
     <span>{{path.name}}</span>
     <pre>
     {{path.breakpoints.length}} points
-    {{path.fill}}
     <input type="text" v-model="path.stroke">
     <input type="text" v-model="path.strokeWidth">
     <input type="text" v-model="path.fill">
+    <input type="checkbox" v-model="path.close">
     </pre>
   </div>
 </template>

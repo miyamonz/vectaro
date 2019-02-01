@@ -7,6 +7,8 @@ export default class BezierPath {
   public strokeWidth: number = 1;
   public fill: string = "transparent";
   public name: string;
+
+  public close: boolean = false;
   constructor() {
     this.name = "path" + i++;
   }
