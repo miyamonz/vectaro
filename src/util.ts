@@ -55,3 +55,16 @@ export const debounce = (fn: any) => {
     });
   };
 };
+
+export const createSymBp = (point: Point, handle: Point) => {
+  const bp: Breakpoint = {
+    ...point,
+    startHandle: handle,
+    endHandle: {
+      x: 2 * point.x - handle.x,
+      y: 2 * point.y - handle.y
+    }
+  };
+
+  return bp;
+};

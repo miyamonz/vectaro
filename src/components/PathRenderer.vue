@@ -6,6 +6,10 @@
       v-bind="{...path.attrs}"
       :stroke-width=" path.strokeWidth"
     />
+    <path 
+      v-if="tmpPath"
+      v-bind="{...tmpPath.attrs}"
+    />
   </svg>
 </template>
 
@@ -26,6 +30,12 @@ export default class MainView extends Vue {
   @Prop() private hovering!: number | null;
   get viewbox() {
     return tmpState.viewbox;
+  }
+
+  get tmpPath() {
+    if (!this.$store.state.editState.addingBreakpoint) return null;
+    if (!this.$store.getters.currentPath) return null;
+    return tmpState.tmpPath;
   }
 }
 </script>

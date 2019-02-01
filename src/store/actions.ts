@@ -7,7 +7,7 @@ interface Context {
   commit: any;
 }
 
-const addBreakpoint = (path: BezierPath, point: Breakpoint) => {
+const addBreakpointToPath = (path: BezierPath, point: Breakpoint) => {
   path.breakpoints.push(point);
 };
 
@@ -15,26 +15,21 @@ export const updateEditState = ({ state }: Context, b: boolean) => {
   state.editState.addingBreakpoint = b;
 };
 
-export const click = ({ state, getters, commit }: Context, point: Point) => {
-  if (!state.editState.addingBreakpoint) {
-    return;
-  }
-  const bp = {
-    ...point,
-    startHandle: point,
-    endHandle: point
-  };
-
+export const addBreakpoint = ({ state, getters }: Context, bp: Breakpoint) => {
   const { currentPath } = getters;
   if (currentPath === null) {
-    commit("setCurrentPathIndex", state.paths.length);
-    const newPath = new BezierPath();
-    state.paths.push(newPath);
-    addBreakpoint(state.paths[state.paths.length - 1], bp);
-  } else {
-    addBreakpoint(currentPath, bp);
+    return;
   }
+  addBreakpointToPath(currentPath, bp);
 };
+
+export const newPath = ({ state, commit }: Context) => {
+  commit("setCurrentPathIndex", state.paths.length);
+  const p = new BezierPath();
+  state.paths.push(p);
+  return p;
+};
+
 export const setGrab = ({ state }: Context, g: any) => {
   state.editState.grab = g;
 };
@@ -63,25 +58,6 @@ export const setPosOnGrab = ({ state }: Context, point: Point) => {
       bp.y = point.y;
       break;
   }
-};
-
-export const setHandleToLastBp = (
-  { state, getters }: Context,
-  point: Point
-) => {
-  const { currentPath } = getters;
-  if (currentPath === null) {
-    return false;
-  }
-  const { breakpoints } = currentPath;
-  if (currentPath.breakpoints.length === 0) {
-    return false;
-  }
-  const lastBreakpoint = breakpoints[breakpoints.length - 1];
-  const { x, y } = lastBreakpoint;
-  lastBreakpoint.startHandle = point;
-  lastBreakpoint.endHandle = { x: 2 * x - point.x, y: 2 * y - point.y };
-  return true;
 };
 
 export const exitDrawPath = ({ commit }: Context) => {

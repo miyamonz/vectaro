@@ -1,5 +1,6 @@
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 import store from "@/store";
+import BezierPath from "@/BezierPath";
 
 const initial = Object.assign([], store.state.editState.viewbox);
 
@@ -9,6 +10,8 @@ class TmpState extends Vue {
   public y: number = initial[1];
   public w: number = initial[2];
   public h: number = initial[3];
+
+  public tmpPath: BezierPath = new BezierPath();
 
   get viewbox() {
     const { x, y, w, h } = this;

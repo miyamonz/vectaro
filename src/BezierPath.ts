@@ -13,6 +13,11 @@ export default class BezierPath {
     this.name = "path" + i++;
   }
 
+  get lastBp() {
+    const len = this.breakpoints.length;
+    return this.breakpoints[len - 1];
+  }
+
   public pathStr(): string {
     return encodePath(this);
   }
