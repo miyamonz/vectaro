@@ -62,7 +62,7 @@ export default class MainView extends Vue {
 .path-edit {
   display: flex;
   position: relative;
-  height: 750px;
+  height: 700px;
   justify-content: center;
 }
 .side-menu {

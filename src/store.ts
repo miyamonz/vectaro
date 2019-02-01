@@ -24,17 +24,17 @@ export interface State {
   };
 }
 
-const vmin: number = Math.min(700, window.innerWidth, window.innerHeight);
+const iw: number = 500;
 const initialState: State = {
-  width: vmin,
-  height: vmin,
+  width: iw,
+  height: iw,
   paths: [],
   editState: {
     currentPathIndex: null,
-    viewbox: [0, 0, vmin, vmin],
+    viewbox: [0, 0, iw, iw],
     showLine: false,
     showCommandPalette: false,
-    addingBreakpoint: false,
+    addingBreakpoint: true,
     grab: null
   }
 };

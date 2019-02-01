@@ -1,15 +1,10 @@
 <template>
   <div id="app">
     <button @click= "fullscreen" >fullscreen</button>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
-      <input v-model="adding" type="checkbox">
+      <input v-model="adding" type="checkbox" style="width: 50px; transform: scale(2)">
       <button @click="$store.commit('setViewbox', [0,0,500,500])">reset viewport</button>
       <ButtonDownload />
-      <pre style="text-align:left">{{$store.getters.toSVG}}</pre>
   </div>
 </template>
 <script lang="ts">

@@ -22,7 +22,9 @@ export default class MainView extends Vue {
 .layers {
   position: relative;
   border: solid 1px;
+  background: transparent;
   & > * {
+    background: transparent;
     position: absolute;
     top: 0;
     left: 0;

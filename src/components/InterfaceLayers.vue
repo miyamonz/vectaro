@@ -10,10 +10,11 @@
         :hovering="hovering"
       />
       <MouseHandler 
+        style="z-index: 100"
         v-bind="{width, height}"
       />
       <ControlPointsRenderer 
-        :style="{'z-index': $store.state.editState.addingBreakpoint ? -1 : 'auto'}"
+        :style="{'z-index': $store.state.editState.addingBreakpoint ? 1 : 101}"
         v-bind="{width, height}"
         v-if="$store.getters.currentPath"
         :path="$store.getters.currentPath"
