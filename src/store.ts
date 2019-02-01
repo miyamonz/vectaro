@@ -14,6 +14,7 @@ export interface State {
     currentPathIndex: number | null;
     viewbox: [number, number, number, number];
     showLine: boolean;
+    showCommandPalette: boolean;
     grab: null | {
       name: string;
       idx: number;
@@ -32,6 +33,7 @@ const initialState: State = {
     currentPathIndex: null,
     viewbox: [0, 0, vmin, vmin],
     showLine: false,
+    showCommandPalette: false,
     addingBreakpoint: false,
     grab: null
   }
@@ -56,6 +58,9 @@ export default new Vuex.Store({
     },
     setShowLine(state, b: boolean) {
       state.editState.showLine = b;
+    },
+    setShowCommandPalette(state, b: boolean) {
+      state.editState.showCommandPalette = b;
     }
   },
   getters: {

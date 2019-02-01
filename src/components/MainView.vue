@@ -9,47 +9,31 @@
         <PathMenu v-if="$store.getters.currentPath === null" @hovering="hovering = $event" />
         <PathAttrEditor v-else :path="$store.getters.currentPath"/>
       </div>
-      <LayerContainer v-bind="{width, height}">
-        <GridRenderer 
-          v-bind="{width, height}"
-        />
-        <PathRenderer 
-          v-bind="{width, height}"
-          :paths="$store.state.paths"
-          :hovering="hovering"
-        />
-        <MouseHandler 
-          v-bind="{width, height}"
-        />
-        <ControlPointsRenderer 
-          :style="{'z-index': $store.state.editState.addingBreakpoint ? -1 : 'auto'}"
-          v-bind="{width, height}"
-          v-if="$store.getters.currentPath"
-          :path="$store.getters.currentPath"
-        />
-      </LayerContainer>
+      <InterfaceLayers  v-bind="{hovering}"/>
     </div>
+    <Modal
+      v-if="$store.state.editState.showCommandPalette"
+      @close="$store.commit('setShowCommandPalette', false)"
+    >
+      <input type="text" @keyup.enter="enter" >
+    </Modal>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import PathMenu from "@/components/PathMenu.vue";
 import PathAttrEditor from "@/components/PathAttrEditor.vue";
-import LayerContainer from "@/components/LayerContainer.vue";
-import MouseHandler from "@/components/MouseHandler.vue";
-import GridRenderer from "@/components/GridRenderer.vue";
-import PathRenderer from "@/components/PathRenderer.vue";
-import ControlPointsRenderer from "@/components/ControlPointsRenderer.vue";
+
+import InterfaceLayers from "@/components/InterfaceLayers.vue";
+
+import Modal from "@/components/Modal.vue";
 
 @Component({
   components: {
     PathAttrEditor,
     PathMenu,
-    LayerContainer,
-    MouseHandler,
-    GridRenderer,
-    PathRenderer,
-    ControlPointsRenderer
+    InterfaceLayers,
+    Modal
   }
 })
 export default class MainView extends Vue {
@@ -67,14 +51,26 @@ export default class MainView extends Vue {
   }
 
   private hovering: string | null = null;
+
+  public enter() {
+    console.log("enter");
+    this.$store.commit("setShowCommandPalette", false);
+  }
 }
 </script>
 <style>
 .path-edit {
   display: flex;
+  position: relative;
+  height: 750px;
   justify-content: center;
 }
 .side-menu {
+  background: lightgray;
+
+  left: 10px;
+  top: 10px;
+  z-index: 1;
   width: 250px;
   overflow: hidden;
 }

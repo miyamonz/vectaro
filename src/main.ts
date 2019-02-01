@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 
 window.onkeyup = (e: KeyboardEvent) => {
+  console.log(e);
   if (e.key === "Shift") {
     store.dispatch("updateEditState", false);
   }
@@ -11,9 +12,16 @@ window.onkeyup = (e: KeyboardEvent) => {
 window.onkeydown = (e: KeyboardEvent) => {
   if (e.key === "Shift") {
     store.dispatch("updateEditState", true);
+    return;
   }
   if (e.key === "Escape" || e.key === "Enter") {
     store.dispatch("exitDrawPath");
+    return;
+  }
+
+  if (e.code === "Space" && e.shiftKey) {
+    const b = store.state.editState.showCommandPalette;
+    store.commit("setShowCommandPalette", !b);
   }
 };
 
