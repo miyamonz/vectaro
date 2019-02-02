@@ -53,7 +53,6 @@ export default class MainView extends Vue {
   private hovering: string | null = null;
 
   public enter() {
-    console.log("enter");
     this.$store.commit("setShowCommandPalette", false);
   }
 }

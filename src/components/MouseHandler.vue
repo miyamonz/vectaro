@@ -61,7 +61,6 @@ export default class MouseHandler extends Vue {
     }
     const { currentPath } = this.$store.getters;
     if (currentPath.lastBp) {
-      console.log("breakpoint", currentPath.lastBp);
       tmpState.tmpPath.breakpoints = [];
       tmpState.tmpPath.breakpoints[0] = currentPath.lastBp;
     }
