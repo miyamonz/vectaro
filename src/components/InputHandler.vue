@@ -51,20 +51,43 @@ export default class InputHandler extends Vue {
   public up(x: number, y: number) {
     this.before = null;
   }
+
+  @Emit()
+  public touchesDown(touches: Point[]) {
+    // @ts-ignore
+  }
+  @Emit()
+  public touchesMove(touches: Point[]) {
+    // @ts-ignore
+  }
+
   public touchstart(e: TouchEvent) {
-    const touch = e.changedTouches[0];
-    const { x, y } = getOffsetFromTouch(touch);
-    this.down(x, y);
+    const touches = e.touches;
+    if (touches.length === 1) {
+      const touch = touches[0];
+      const { x, y } = getOffsetFromTouch(touch);
+      this.down(x, y);
+    } else if (touches.length === 2) {
+      this.touchesDown(Array.from(touches).map(getOffsetFromTouch));
+    }
   }
   public touchmove(e: TouchEvent) {
-    const touch = e.changedTouches[0];
-    const { x, y } = getOffsetFromTouch(touch);
-    this.move(x, y);
+    const touches = e.touches;
+    if (touches.length === 1) {
+      const touch = touches[0];
+      const { x, y } = getOffsetFromTouch(touch);
+      this.move(x, y);
+    } else if (touches.length === 2) {
+      this.touchesMove(Array.from(touches).map(getOffsetFromTouch));
+    }
   }
   public touchend(e: TouchEvent) {
-    const touch = e.changedTouches[0];
-    const { x, y } = getOffsetFromTouch(touch);
-    this.up(x, y);
+    const touches = e.touches;
+    if (touches.length === 1) {
+      const touch = touches[0];
+      const { x, y } = getOffsetFromTouch(touch);
+      this.up(x, y);
+    }
   }
   public mousedown(e: MouseEvent) {
     this.down(e.offsetX, e.offsetY);
