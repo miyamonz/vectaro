@@ -6,21 +6,18 @@
       v-bind="{...path.attrs}"
       :stroke-width=" path.strokeWidth"
     />
-    <path 
-      v-if="tmpPath"
-      v-bind="{...tmpPath.attrs}"
-    />
+    <Preview :path="tmpPath"/>
   </svg>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import BezierControlPoint from "./BezierControlPoint.vue";
+import Preview from "./Preview.vue";
 import tmpState from "@/tmpState.ts";
 
 @Component({
   components: {
-    BezierControlPoint
+    Preview
   }
 })
 export default class MainView extends Vue {
@@ -33,8 +30,6 @@ export default class MainView extends Vue {
   }
 
   get tmpPath() {
-    if (!this.$store.state.editState.addingBreakpoint) return null;
-    if (!this.$store.getters.currentPath) return null;
     return tmpState.tmpPath;
   }
 }

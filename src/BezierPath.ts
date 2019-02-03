@@ -15,6 +15,9 @@ export default class BezierPath {
 
   get lastBp() {
     const len = this.breakpoints.length;
+    if (len === 0) {
+      return null;
+    }
     return this.breakpoints[len - 1];
   }
 

@@ -71,6 +71,11 @@ export default class MouseHandler extends Vue {
     Vue.set(this.mousePos, "x", x);
     Vue.set(this.mousePos, "y", y);
 
+    if (this.addingBreakpoint && !tmpState.tmpPath.lastBp) {
+      const bp = createSymBp(this.downPos, this.downPos);
+      tmpState.tmpPath.breakpoints = [bp];
+    }
+
     if (this.addingBreakpoint && tmpState.tmpPath.lastBp) {
       const pos = tmpState.cameraToWorld({ x, y });
 
