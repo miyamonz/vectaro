@@ -14,6 +14,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import Preview from "./Preview.vue";
 import tmpState from "@/tmpState.ts";
+import tmpViewbox from "@/viewbox.ts";
 
 @Component({
   components: {
@@ -26,7 +27,7 @@ export default class MainView extends Vue {
   @Prop() private height!: number;
   @Prop() private hovering!: number | null;
   get viewbox() {
-    return tmpState.viewbox;
+    return tmpViewbox.viewbox;
   }
 
   get tmpPath() {

@@ -9,10 +9,13 @@
 <script lang="ts">
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 import InputHandler from "@/components/InputHandler.vue";
+import tmpViewbox from "@/viewbox.ts";
 import tmpState from "@/tmpState.ts";
 
+const { tmpPath } = tmpState;
+
 import { debounce, createSymBp } from "@/util.ts";
-const debounceCommit = debounce(() => tmpState.commit());
+const debounceCommit = debounce(() => tmpViewbox.commit());
 
 @Component({ components: { InputHandler } })
 export default class MouseHandler extends Vue {
@@ -23,17 +26,17 @@ export default class MouseHandler extends Vue {
   private mousePos: Point = { x: 0, y: 0 };
 
   get viewbox() {
-    return tmpState.viewbox;
+    return tmpViewbox.viewbox;
   }
   public mounted() {
     const listener = (e: WheelEvent) => {
       e.preventDefault();
       if (e.ctrlKey) {
         // zoom
-        tmpState.zoom(e.deltaX, e.deltaY, this.mousePos);
+        tmpViewbox.zoom(e.deltaX, e.deltaY, this.mousePos);
       } else {
         // scale
-        tmpState.scroll(e.deltaX, e.deltaY);
+        tmpViewbox.scroll(e.deltaX, e.deltaY);
       }
       debounceCommit();
     };
@@ -41,12 +44,12 @@ export default class MouseHandler extends Vue {
   }
 
   public down(x: number, y: number) {
-    const pos = tmpState.cameraToWorld({ x, y });
+    const pos = tmpViewbox.cameraToWorld({ x, y });
     this.downPos = pos;
 
     if (!this.$store.getters.currentPath) {
       this.$store.dispatch("newPath");
-      tmpState.tmpPath.breakpoints = [];
+      tmpPath.breakpoints = [];
     }
   }
   get addingBreakpoint() {
@@ -55,14 +58,14 @@ export default class MouseHandler extends Vue {
   public up(x: number, y: number) {
     // up
     if (this.addingBreakpoint) {
-      const pos = tmpState.cameraToWorld({ x, y });
+      const pos = tmpViewbox.cameraToWorld({ x, y });
       const bp = createSymBp(this.downPos, pos);
       this.$store.dispatch("addBreakpoint", bp);
     }
     const { currentPath } = this.$store.getters;
     if (currentPath.lastBp) {
-      tmpState.tmpPath.breakpoints = [];
-      tmpState.tmpPath.breakpoints[0] = currentPath.lastBp;
+      tmpPath.breakpoints = [];
+      tmpPath.breakpoints[0] = currentPath.lastBp;
     }
   }
 
@@ -71,16 +74,16 @@ export default class MouseHandler extends Vue {
     Vue.set(this.mousePos, "x", x);
     Vue.set(this.mousePos, "y", y);
 
-    if (this.addingBreakpoint && !tmpState.tmpPath.lastBp) {
+    if (this.addingBreakpoint && !tmpPath.lastBp) {
       const bp = createSymBp(this.downPos, this.downPos);
-      tmpState.tmpPath.breakpoints = [bp];
+      tmpPath.breakpoints = [bp];
     }
 
-    if (this.addingBreakpoint && tmpState.tmpPath.lastBp) {
-      const pos = tmpState.cameraToWorld({ x, y });
+    if (this.addingBreakpoint && tmpPath.lastBp) {
+      const pos = tmpViewbox.cameraToWorld({ x, y });
 
       const tmpBp = createSymBp(down ? this.downPos : pos, pos);
-      Vue.set(tmpState.tmpPath.breakpoints, 1, tmpBp);
+      Vue.set(tmpPath.breakpoints, 1, tmpBp);
     }
   }
 }

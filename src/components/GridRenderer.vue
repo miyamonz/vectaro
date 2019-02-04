@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import BezierControlPoint from "./BezierControlPoint.vue";
-import tmpState from "@/tmpState.ts";
+import tmpViewbox from "@/viewbox.ts";
 
 const range = (length: number) => Array.from({ length }, (_, i) => i);
 @Component({
@@ -27,7 +27,7 @@ export default class MainView extends Vue {
   @Prop() private height!: number;
 
   get viewbox() {
-    return tmpState.viewbox;
+    return tmpViewbox.viewbox;
   }
   public mapX(x: number) {
     const [vx, vy, vw, vh] = this.viewbox;

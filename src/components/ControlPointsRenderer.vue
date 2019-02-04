@@ -18,7 +18,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import InputHandler from "./InputHandler.vue";
 import BezierControlPoint from "./BezierControlPoint.vue";
-import tmpState from "@/tmpState.ts";
+import tmpViewbox from "@/viewbox.ts";
 
 @Component({
   components: {
@@ -32,7 +32,7 @@ export default class MainView extends Vue {
   @Prop() private height!: number;
 
   get viewbox() {
-    return tmpState.viewbox;
+    return tmpViewbox.viewbox;
   }
   public downPoint(grab: object) {
     this.$store.dispatch("setGrab", grab);
