@@ -61,6 +61,9 @@ export default new Vuex.Store({
     },
     setShowCommandPalette(state, b: boolean) {
       state.editState.showCommandPalette = b;
+    },
+    setPaths(state, paths: BezierPath[]) {
+      state.paths = paths;
     }
   },
   getters: {

@@ -58,14 +58,18 @@ export const pathCommandsToBreakpoints = (commands: PathCommand[]) => {
 
 export default (text: string) => {
   const $ = cheerio.load(text, { xmlMode: true });
-  $("path").each((i, elm) => {
-    const { attribs } = elm;
-    console.log(i, attribs);
+  const paths = $("path")
+    .map((i, elm) => {
+      const { attribs } = elm;
 
-    const path = new BezierPath();
-    path.name = attribs["data-name"];
-    path.fill = attribs.fill;
-    path.stroke = attribs.stroke;
-    path.strokeWidth = parseFloat(attribs["stroke-width"]);
-  });
+      const path = new BezierPath();
+      path.name = attribs["data-name"];
+      path.fill = attribs.fill;
+      path.stroke = attribs.stroke;
+      path.strokeWidth = parseFloat(attribs["stroke-width"]);
+      path.breakpoints = pathCommandsToBreakpoints(strToPathCommand(attribs.d));
+      return path;
+    })
+    .get();
+  return paths;
 };

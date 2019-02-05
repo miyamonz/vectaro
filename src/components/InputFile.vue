@@ -1,12 +1,12 @@
 <template>
   <div>
     <input type="file" v-on:change="onFileChange" accept=".svg">
-    {{txt}}
     {{resultText}}
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import parseSVG from "@/parseSVG.ts";
 
 interface HTMLInputEvent extends Event {
   target: HTMLInputElement;
@@ -47,7 +47,9 @@ export default class extends Vue {
     this.txt = txt;
 
     try {
-      throw new Error();
+      const paths = parseSVG(txt);
+      this.$store.commit("setPaths", paths);
+      this.txt = "ロードできた";
     } catch {
       this.resultText = errorText;
     }
