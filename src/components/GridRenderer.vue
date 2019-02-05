@@ -22,7 +22,7 @@ const range = (length: number) => Array.from({ length }, (_, i) => i);
     BezierControlPoint
   }
 })
-export default class MainView extends Vue {
+export default class extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
 

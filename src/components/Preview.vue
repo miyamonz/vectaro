@@ -17,7 +17,7 @@ import Breakpoint from "./Breakpoint.vue";
     Breakpoint
   }
 })
-export default class MainView extends Vue {
+export default class extends Vue {
   @Prop() private path?: BezierPath;
   get currentPath() {
     return this.$store.getters.currentPath;

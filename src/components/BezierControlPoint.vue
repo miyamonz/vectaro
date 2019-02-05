@@ -14,7 +14,7 @@ import Breakpoint from "./Breakpoint.vue";
     Breakpoint
   }
 })
-export default class BezierControlPoint extends Vue {
+export default class extends Vue {
   @Prop() private path!: BezierPath;
 
   // @mousedown="down(key, idx)"

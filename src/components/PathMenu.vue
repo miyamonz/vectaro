@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
-export default class MainView extends Vue {
+export default class extends Vue {
   private over: boolean = false;
   public enter(name: string) {
     this.over = true;

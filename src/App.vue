@@ -15,7 +15,7 @@ import InputFile from "@/components/InputFile.vue";
 import { toggleFullscreen } from "@/util.ts";
 
 @Component({ components: { ButtonDownload, InputFile } })
-export default class App extends Vue {
+export default class extends Vue {
   public fullscreen() {
     toggleFullscreen();
   }

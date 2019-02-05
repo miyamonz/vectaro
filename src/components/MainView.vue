@@ -36,7 +36,7 @@ import Modal from "@/components/Modal.vue";
     Modal
   }
 })
-export default class MainView extends Vue {
+export default class extends Vue {
   get width(): number {
     return this.$store.state.width;
   }

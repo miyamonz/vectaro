@@ -13,5 +13,5 @@ import MainView from "@/components/MainView.vue"; // @ is an alias to /src
     MainView
   }
 })
-export default class Home extends Vue {}
+export default class extends Vue {}
 </script>

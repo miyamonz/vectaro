@@ -18,7 +18,7 @@ import { debounce, createSymBp } from "@/util.ts";
 const debounceCommit = debounce(() => tmpViewbox.commit());
 
 @Component({ components: { InputHandler } })
-export default class MouseHandler extends Vue {
+export default class extends Vue {
   @Prop() private width!: number;
   @Prop() private height!: number;
 

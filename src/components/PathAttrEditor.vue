@@ -24,7 +24,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
-export default class MainView extends Vue {
+export default class extends Vue {
   @Prop() public path!: BezierPath;
 }
 </script>
