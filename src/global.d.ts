@@ -11,5 +11,10 @@ declare global {
     endHandle: Point;
   }
   interface BezierPath extends _BezierPath {}
+
+  interface PathCommand {
+    type: string;
+    points: Point[];
+  }
 }
 export {};
