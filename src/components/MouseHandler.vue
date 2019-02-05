@@ -31,13 +31,9 @@ export default class extends Vue {
   public mounted() {
     const listener = (e: WheelEvent) => {
       e.preventDefault();
-      if (e.ctrlKey) {
-        // zoom
-        tmpViewbox.zoom(e.deltaX, e.deltaY, this.mousePos);
-      } else {
-        // scale
-        tmpViewbox.scroll(e.deltaX, e.deltaY);
-      }
+      if (e.ctrlKey) tmpViewbox.zoom(e.deltaX, e.deltaY, this.mousePos);
+      else tmpViewbox.scroll(e.deltaX, e.deltaY);
+
       debounceCommit();
     };
     this.$el.addEventListener("wheel", listener as EventListener);
