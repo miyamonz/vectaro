@@ -5,14 +5,16 @@
       <input v-model="adding" type="checkbox" style="width: 50px; transform: scale(2)">
       <button @click="$store.commit('setViewbox', [0,0,500,500])">reset viewport</button>
       <ButtonDownload />
+      <InputFile />
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ButtonDownload from "@/components/ButtonDownload.vue";
+import InputFile from "@/components/InputFile.vue";
 import { toggleFullscreen } from "@/util.ts";
 
-@Component({ components: { ButtonDownload } })
+@Component({ components: { ButtonDownload, InputFile } })
 export default class App extends Vue {
   public fullscreen() {
     toggleFullscreen();
