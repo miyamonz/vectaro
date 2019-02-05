@@ -13,6 +13,7 @@
     "prettier": true,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "interface-name": false
+    "interface-name": false,
+    "curly": false
   }
 }
