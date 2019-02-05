@@ -8,9 +8,13 @@ export default class BezierPath {
   public fill: string = "transparent";
   public name: string;
 
+  public readonly key: string;
+
   public close: boolean = false;
   constructor() {
     this.name = "path" + i++;
+
+    this.key = new Date().getTime() + "-" + i;
   }
 
   get lastBp() {

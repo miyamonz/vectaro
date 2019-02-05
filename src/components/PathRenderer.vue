@@ -2,7 +2,7 @@
   <svg :width="width" :height="height" 
     :viewBox="viewbox"
     >
-    <path v-for="path in paths" :key="path.name"
+    <path v-for="path in paths" :key="path.key"
       v-bind="{...path.attrs}"
       :stroke-width=" path.strokeWidth"
     />
