@@ -83,7 +83,6 @@ export default class InputHandler extends Vue {
   }
   public touchend(e: TouchEvent) {
     const { changedTouches } = e;
-    console.log(e);
     if (changedTouches.length === 1) {
       const touch = changedTouches[0];
       const { x, y } = getOffsetFromTouch(touch);

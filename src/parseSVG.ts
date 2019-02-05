@@ -1,7 +1,7 @@
 import cheerio from "cheerio";
 import BezierPath from "@/BezierPath.ts";
 
-const chunk = (arr: Array<any>, size: number) =>
+const chunk = (arr: any[], size: number) =>
   Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
     arr.slice(i * size, i * size + size)
   );
@@ -10,8 +10,10 @@ export const strToPathCommand = (text: string) => {
   const pattern = /([a-zA-Z][^a-zA-Z]*)/g;
   let result;
 
-  let res = [];
-  while ((result = pattern.exec(text))) {
+  const res = [];
+  while (true) {
+    result = pattern.exec(text);
+    if (!result) break;
     const commandStr = RegExp.lastMatch;
     const nums = commandStr.match(/(\d|\.)+/g);
     if (!nums) throw new Error("point not found");
@@ -32,7 +34,7 @@ const anotherPos = (anchor: Point, pos: Point) => {
   };
 };
 export const pathCommandsToBreakpoints = (commands: PathCommand[]) => {
-  let res = [];
+  const res = [];
   for (let i = 0; i < commands.length; i++) {
     const center = i === 0 ? commands[0].points[0] : commands[i].points[2];
     const current = commands[i];

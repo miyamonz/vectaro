@@ -31,7 +31,7 @@ export default class extends Vue {
     const s = file.size;
     const t = file.type;
 
-    console.log(`file selected!! [${n} | ${s} | ${t} ]`);
+    this.txt = `file selected!! [${n} | ${s} | ${t} ]`;
 
     const reader = new FileReader();
     reader.onload = e => {
