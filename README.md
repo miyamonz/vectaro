@@ -1,4 +1,4 @@
-# svg-edit
+# vectaro
 
 ## Project setup
 ```
