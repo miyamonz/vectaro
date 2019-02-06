@@ -1,8 +1,8 @@
 <template>
   <component :is="tag" :style="style"
-    @mousemove="move($event.offsetX, $event.offsetY)" @touchmove="touchmove"
-    @mousedown="down($event.offsetX, $event.offsetY)" @touchstart="touchstart"
-    @mouseup="up($event.offsetX, $event.offsetY)"     @touchend="touchend"
+  @mousemove="move({x:$event.offsetX, y:$event.offsetY})" @touchmove="touchmove"
+  @mousedown="down({x:$event.offsetX, y:$event.offsetY})" @touchstart="touchstart"
+  @mouseup="up({x:$event.offsetX, y:$event.offsetY})"     @touchend="touchend"
     >
     <slot />
   </component>
@@ -36,19 +36,19 @@ export default class InputHandler extends Vue {
       height: this.height + "px"
     };
   }
-  public move(x: number, y: number) {
-    this.$emit("move", x, y, this.before);
+  public move(pos: Point) {
+    this.$emit("move", pos, this.before);
     // control pointをgrabしてれば動かす
     if (this.$store.state.editState.grab) {
-      this.$store.dispatch("setPosOnGrab", { x, y });
+      this.$store.dispatch("setPosOnGrab", pos);
     }
   }
   @Emit()
-  public down(x: number, y: number) {
-    this.$set(this, "before", { x, y });
+  public down(pos: Point) {
+    this.$set(this, "before", pos);
   }
   @Emit()
-  public up(x: number, y: number) {
+  public up(pos: Point) {
     this.before = null;
   }
 
@@ -65,8 +65,8 @@ export default class InputHandler extends Vue {
     const touches = e.touches;
     if (touches.length === 1) {
       const touch = touches[0];
-      const { x, y } = getOffsetFromTouch(touch);
-      this.down(x, y);
+      const pos = getOffsetFromTouch(touch);
+      this.down(pos);
     } else if (touches.length === 2) {
       this.touchesDown(Array.from(touches).map(getOffsetFromTouch));
     }
@@ -75,8 +75,8 @@ export default class InputHandler extends Vue {
     const touches = e.touches;
     if (touches.length === 1) {
       const touch = touches[0];
-      const { x, y } = getOffsetFromTouch(touch);
-      this.move(x, y);
+      const pos = getOffsetFromTouch(touch);
+      this.move(pos);
     } else if (touches.length === 2) {
       this.touchesMove(Array.from(touches).map(getOffsetFromTouch));
     }
@@ -85,12 +85,12 @@ export default class InputHandler extends Vue {
     const { changedTouches } = e;
     if (changedTouches.length === 1) {
       const touch = changedTouches[0];
-      const { x, y } = getOffsetFromTouch(touch);
-      this.up(x, y);
+      const pos = getOffsetFromTouch(touch);
+      this.up(pos);
     }
   }
   public mousedown(e: MouseEvent) {
-    this.down(e.offsetX, e.offsetY);
+    this.down({ x: e.offsetX, y: e.offsetY });
   }
 }
 </script>

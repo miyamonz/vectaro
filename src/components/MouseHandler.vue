@@ -39,9 +39,9 @@ export default class extends Vue {
     this.$el.addEventListener("wheel", listener as EventListener);
   }
 
-  public down(x: number, y: number) {
-    const pos = tmpViewbox.cameraToWorld({ x, y });
-    this.downPos = pos;
+  public down(pos: Point) {
+    const worldPos = tmpViewbox.cameraToWorld(pos);
+    this.downPos = worldPos;
 
     if (!this.$store.getters.currentPath) {
       this.$store.dispatch("newPath");
@@ -51,11 +51,11 @@ export default class extends Vue {
   get addingBreakpoint() {
     return this.$store.state.editState.addingBreakpoint;
   }
-  public up(x: number, y: number) {
+  public up(pos: Point) {
     // up
     if (this.addingBreakpoint) {
-      const pos = tmpViewbox.cameraToWorld({ x, y });
-      const bp = createSymBp(this.downPos, pos);
+      const worldPos = tmpViewbox.cameraToWorld(pos);
+      const bp = createSymBp(this.downPos, worldPos);
       this.$store.dispatch("addBreakpoint", bp);
     }
     const { currentPath } = this.$store.getters;
@@ -65,10 +65,10 @@ export default class extends Vue {
     }
   }
 
-  public move(x: number, y: number, down: boolean) {
+  public move(pos: Point, down: boolean) {
     // move
-    Vue.set(this.mousePos, "x", x);
-    Vue.set(this.mousePos, "y", y);
+    Vue.set(this.mousePos, "x", pos.x);
+    Vue.set(this.mousePos, "y", pos.y);
 
     if (this.addingBreakpoint && !tmpPath.lastBp) {
       const bp = createSymBp(this.downPos, this.downPos);
@@ -76,9 +76,9 @@ export default class extends Vue {
     }
 
     if (this.addingBreakpoint && tmpPath.lastBp) {
-      const pos = tmpViewbox.cameraToWorld({ x, y });
+      const worldPos = tmpViewbox.cameraToWorld(pos);
 
-      const tmpBp = createSymBp(down ? this.downPos : pos, pos);
+      const tmpBp = createSymBp(down ? this.downPos : worldPos, worldPos);
       Vue.set(tmpPath.breakpoints, 1, tmpBp);
     }
   }
