@@ -40,6 +40,18 @@ const getOffsetFromTouch = (touch: Touch) => {
 const TouchListToPointArr = (touches: TouchList) =>
   Array.from(touches).map(getOffsetFromTouch);
 
+const getCenterAndRad = (touches: TouchList) => {
+  const points = TouchListToPointArr(touches);
+  const center = avarage(points);
+  const x = points[0].x - center.x;
+  const y = points[0].y - center.y;
+  const radius = Math.sqrt(x ** 2 + y ** 2);
+  return {
+    center,
+    radius
+  };
+};
+
 @Component({
   props: {
     tag: { default: "div" }
@@ -83,20 +95,6 @@ export default class InputHandler extends Vue {
     this.before = null;
   }
 
-  get downPos() {
-    if (this.downTouches === null) return null;
-    const points = TouchListToPointArr(this.downTouches);
-    return avarage(points);
-  }
-  get downRadius() {
-    if (this.downTouches === null) return null;
-    if (this.downPos === null) return null;
-
-    const points = TouchListToPointArr(this.downTouches);
-    const x = points[0].x - this.downPos.x;
-    const y = points[0].y - this.downPos.y;
-    return Math.sqrt(x ** 2 + y ** 2);
-  }
   public execDown(touches: TouchList) {
     const len = touches.length;
     this.currentTouchNum = len;
@@ -114,22 +112,19 @@ export default class InputHandler extends Vue {
       const pos = getOffsetFromTouch(touch);
       this.move(pos);
     } else if (touches.length === 2) {
-      if (this.downPos === null) return;
-      if (this.downRadius === null) return;
-      const prevPos = this.downPos;
-      const prevRad = this.downRadius;
-      this.downTouches = touches;
-      const currPos = this.downPos;
-      const currRad = this.downRadius;
+      if (this.downTouches === null) return;
+      const prev = getCenterAndRad(this.downTouches);
+      const curr = getCenterAndRad(touches);
 
       const offset = {
-        x: prevPos.x - currPos.x,
-        y: prevPos.y - currPos.y
+        x: prev.center.x - curr.center.x,
+        y: prev.center.y - curr.center.y
       };
 
+      const diffRad = prev.radius - curr.radius;
       tmpViewbox.scroll(offset.x, offset.y);
-      const diffRad = prevRad - currRad;
-      tmpViewbox.zoom(diffRad, diffRad, currPos);
+      tmpViewbox.zoom(diffRad, diffRad, curr.center);
+      this.downTouches = touches;
     }
   }
   public execUp(touches: TouchList) {
