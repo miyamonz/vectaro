@@ -3,18 +3,12 @@
     @mousemove="move({x:$event.offsetX, y:$event.offsetY})"
     @mousedown="down({x:$event.offsetX, y:$event.offsetY})"
     @mouseup=  "up  ({x:$event.offsetX, y:$event.offsetY})"
-
-    @touchmove ="touchHandler.touchmove"
-    @touchstart="touchHandler.touchstart"
-    @touchend  ="touchHandler.touchend"
   >
     <slot />
   </component>
 </template>
 <script lang="ts">
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
-
-import TouchHandler from "@/TouchHandler";
 
 import tmpViewbox from "@/viewbox.ts";
 
@@ -26,29 +20,6 @@ const avarage = (points: Point[]) => {
   return {
     x: sum.x / points.length,
     y: sum.y / points.length
-  };
-};
-
-const getOffsetFromTouch = (touch: Touch) => {
-  const target = touch.target as Element;
-  const rect = target.getBoundingClientRect();
-  return {
-    x: touch.clientX - rect.left,
-    y: touch.clientY - rect.top
-  };
-};
-const TouchListToPointArr = (touches: TouchList) =>
-  Array.from(touches).map(getOffsetFromTouch);
-
-const getCenterAndRad = (touches: TouchList) => {
-  const points = TouchListToPointArr(touches);
-  const center = avarage(points);
-  const x = points[0].x - center.x;
-  const y = points[0].y - center.y;
-  const radius = Math.sqrt(x ** 2 + y ** 2);
-  return {
-    center,
-    radius
   };
 };
 
@@ -64,13 +35,8 @@ export default class InputHandler extends Vue {
   private before: object | null = null;
   private currentTouchNum: number = 0;
 
-  private touchHandler = new TouchHandler();
-  private downTouches: TouchList | null = null;
-
   public mounted() {
-    this.touchHandler.onDownFn = this.execDown;
-    this.touchHandler.onUpFn = this.execUp;
-    this.touchHandler.onMoveFn = this.execMove;
+    // mounted
   }
 
   get style() {
@@ -93,60 +59,6 @@ export default class InputHandler extends Vue {
   @Emit()
   public up(pos: Point) {
     this.before = null;
-  }
-
-  public execDown(touches: TouchList) {
-    if (this.currentTouchNum > 0) return;
-    const len = touches.length;
-    this.currentTouchNum = len;
-    if (len === 1) {
-      const touch = touches[0];
-      const pos = getOffsetFromTouch(touch);
-      this.down(pos);
-    } else if (len === 2) {
-      this.downTouches = touches;
-    }
-  }
-  public execMove(touches: TouchList) {
-    if (touches.length !== this.currentTouchNum) return;
-    if (touches.length === 1) {
-      const touch = touches[0];
-      const pos = getOffsetFromTouch(touch);
-      this.move(pos);
-    } else if (touches.length === 2) {
-      if (this.downTouches === null) return;
-      const prev = getCenterAndRad(this.downTouches);
-      const curr = getCenterAndRad(touches);
-
-      const offset = {
-        x: prev.center.x - curr.center.x,
-        y: prev.center.y - curr.center.y
-      };
-
-      const diffRad = prev.radius - curr.radius;
-      tmpViewbox.scroll(offset.x, offset.y);
-      tmpViewbox.zoom(diffRad, diffRad, curr.center);
-      this.downTouches = touches;
-    }
-  }
-  public execUp(touches: TouchList) {
-    if (this.currentTouchNum !== touches.length) {
-      return;
-    }
-    if (this.currentTouchNum === 1) {
-      const touch = touches[0];
-      const pos = getOffsetFromTouch(touch);
-      this.up(pos);
-    }
-
-    if (this.touchHandler.touchNum === 0) this.currentTouchNum = 0;
-    if (touches.length < this.currentTouchNum) {
-      this.exitInput();
-    }
-  }
-
-  public exitInput() {
-    this.currentTouchNum = 0;
   }
 }
 </script>
