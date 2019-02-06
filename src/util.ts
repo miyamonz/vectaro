@@ -33,15 +33,6 @@ export const toSVG = (state: State) => {
   return prettier.format(str, { parser: "html", plugins: prettierPlugins });
 };
 
-export const toggleFullscreen = () => {
-  if (document.fullscreen) {
-    // @ts-ignore
-    document.webkitCancelFullScreen();
-  } else {
-    document.body.requestFullscreen();
-  }
-};
-
 export const debounce = (fn: any) => {
   let isRunning = false;
   return (...arg: any[]) => {
