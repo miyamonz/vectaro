@@ -96,6 +96,7 @@ export default class InputHandler extends Vue {
   }
 
   public execDown(touches: TouchList) {
+    if (this.currentTouchNum > 0) return;
     const len = touches.length;
     this.currentTouchNum = len;
     if (len === 1) {
@@ -107,6 +108,7 @@ export default class InputHandler extends Vue {
     }
   }
   public execMove(touches: TouchList) {
+    if (touches.length !== this.currentTouchNum) return;
     if (touches.length === 1) {
       const touch = touches[0];
       const pos = getOffsetFromTouch(touch);
@@ -128,12 +130,16 @@ export default class InputHandler extends Vue {
     }
   }
   public execUp(touches: TouchList) {
+    if (this.currentTouchNum !== touches.length) {
+      return;
+    }
     if (this.currentTouchNum === 1) {
       const touch = touches[0];
       const pos = getOffsetFromTouch(touch);
       this.up(pos);
     }
 
+    if (this.touchHandler.touchNum === 0) this.currentTouchNum = 0;
     if (touches.length < this.currentTouchNum) {
       this.exitInput();
     }

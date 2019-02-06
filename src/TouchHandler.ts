@@ -15,10 +15,10 @@ class TouchHandler extends Vue {
   public onUpFn?: (touchList: TouchList) => void;
   public onMoveFn?: (touchList: TouchList) => void;
 
+  public touchNum: number = 0;
+
   private debounceDown = new Debounce<TouchList>(this.doDown);
   private debounceUp = new Debounce<TouchList>(this.doUp);
-
-  private touchNum: number = 0;
 
   public doDown(touchList: TouchList) {
     if (this.onDownFn) this.onDownFn(touchList);
