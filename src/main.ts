@@ -25,6 +25,10 @@ window.onkeydown = (e: KeyboardEvent) => {
   }
 };
 
+window.addEventListener("wheel", e => {
+  e.preventDefault();
+});
+
 Vue.config.productionTip = false;
 
 new Vue({
