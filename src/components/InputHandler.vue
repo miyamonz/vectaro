@@ -1,18 +1,20 @@
 <template>
   <component :is="tag" :style="style"
-  @mousemove="move({x:$event.offsetX, y:$event.offsetY})"
-  @mousedown="down({x:$event.offsetX, y:$event.offsetY})"
-  @mouseup="up({x:$event.offsetX, y:$event.offsetY})"
+    @mousemove="move({x:$event.offsetX, y:$event.offsetY})"
+    @mousedown="down({x:$event.offsetX, y:$event.offsetY})"
+    @mouseup=  "up  ({x:$event.offsetX, y:$event.offsetY})"
 
-  @touchmove="touchmove"
-  @touchstart="touchstart"
-  @touchend="touchend"
-    >
+    @touchmove ="touchHandler.touchmove"
+    @touchstart="touchHandler.touchstart"
+    @touchend  ="touchHandler.touchend"
+  >
     <slot />
   </component>
 </template>
 <script lang="ts">
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
+
+import TouchHandler from "@/TouchHandler";
 
 const getOffsetFromTouch = (touch: Touch) => {
   const target = touch.target as Element;
@@ -33,6 +35,15 @@ export default class InputHandler extends Vue {
   @Prop() private height!: number;
 
   private before: object | null = null;
+  private currentTouchNum: number = 0;
+
+  private touchHandler = new TouchHandler();
+
+  public mounted() {
+    this.touchHandler.onDownFn = this.execDown;
+    this.touchHandler.onUpFn = this.execUp;
+    this.touchHandler.onMoveFn = this.execMove;
+  }
 
   get style() {
     return {
@@ -56,45 +67,40 @@ export default class InputHandler extends Vue {
     this.before = null;
   }
 
-  @Emit()
-  public touchesDown(touches: Point[]) {
-    // @ts-ignore
-  }
-  @Emit()
-  public touchesMove(touches: Point[]) {
-    // @ts-ignore
-  }
-
-  public touchstart(e: TouchEvent) {
-    const touches = e.touches;
-    if (touches.length === 1) {
+  public execDown(touches: TouchList) {
+    const len = touches.length;
+    this.currentTouchNum = len;
+    if (len === 1) {
       const touch = touches[0];
       const pos = getOffsetFromTouch(touch);
       this.down(pos);
-    } else if (touches.length === 2) {
-      this.touchesDown(Array.from(touches).map(getOffsetFromTouch));
+    } else if (len === 2) {
+      // this.touchesDown(Array.from(touches).map(getOffsetFromTouch));
     }
   }
-  public touchmove(e: TouchEvent) {
-    const touches = e.touches;
+  public execMove(touches: TouchList) {
     if (touches.length === 1) {
       const touch = touches[0];
       const pos = getOffsetFromTouch(touch);
       this.move(pos);
     } else if (touches.length === 2) {
-      this.touchesMove(Array.from(touches).map(getOffsetFromTouch));
+      // this.touchesMove(Array.from(touches).map(getOffsetFromTouch));
     }
   }
-  public touchend(e: TouchEvent) {
-    const { changedTouches } = e;
-    if (changedTouches.length === 1) {
-      const touch = changedTouches[0];
+  public execUp(touches: TouchList) {
+    if (this.currentTouchNum === 1) {
+      const touch = touches[0];
       const pos = getOffsetFromTouch(touch);
       this.up(pos);
     }
+
+    if (touches.length < this.currentTouchNum) {
+      this.exitInput();
+    }
   }
-  public mousedown(e: MouseEvent) {
-    this.down({ x: e.offsetX, y: e.offsetY });
+
+  public exitInput() {
+    this.currentTouchNum = 0;
   }
 }
 </script>
