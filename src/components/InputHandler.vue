@@ -88,6 +88,15 @@ export default class InputHandler extends Vue {
     const points = TouchListToPointArr(this.downTouches);
     return avarage(points);
   }
+  get downRadius() {
+    if (this.downTouches === null) return null;
+    if (this.downPos === null) return null;
+
+    const points = TouchListToPointArr(this.downTouches);
+    const x = points[0].x - this.downPos.x;
+    const y = points[0].y - this.downPos.y;
+    return Math.sqrt(x ** 2 + y ** 2);
+  }
   public execDown(touches: TouchList) {
     const len = touches.length;
     this.currentTouchNum = len;
@@ -105,13 +114,22 @@ export default class InputHandler extends Vue {
       const pos = getOffsetFromTouch(touch);
       this.move(pos);
     } else if (touches.length === 2) {
-      const points = TouchListToPointArr(touches);
       if (this.downPos === null) return;
-      const prev = this.downPos;
-      const curr = avarage(points);
+      if (this.downRadius === null) return;
+      const prevPos = this.downPos;
+      const prevRad = this.downRadius;
       this.downTouches = touches;
+      const currPos = this.downPos;
+      const currRad = this.downRadius;
 
-      tmpViewbox.scroll(prev.x - curr.x, prev.y - curr.y);
+      const offset = {
+        x: prevPos.x - currPos.x,
+        y: prevPos.y - currPos.y
+      };
+
+      tmpViewbox.scroll(offset.x, offset.y);
+      const diffRad = prevRad - currRad;
+      tmpViewbox.zoom(diffRad, diffRad, currPos);
     }
   }
   public execUp(touches: TouchList) {
