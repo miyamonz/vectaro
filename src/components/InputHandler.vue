@@ -16,6 +16,19 @@ import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 
 import TouchHandler from "@/TouchHandler";
 
+import tmpViewbox from "@/viewbox.ts";
+
+const avarage = (points: Point[]) => {
+  const sum = points.reduce((acc, next) => ({
+    x: acc.x + next.x,
+    y: acc.y + next.y
+  }));
+  return {
+    x: sum.x / points.length,
+    y: sum.y / points.length
+  };
+};
+
 const getOffsetFromTouch = (touch: Touch) => {
   const target = touch.target as Element;
   const rect = target.getBoundingClientRect();
@@ -24,6 +37,8 @@ const getOffsetFromTouch = (touch: Touch) => {
     y: touch.clientY - rect.top
   };
 };
+const TouchListToPointArr = (touches: TouchList) =>
+  Array.from(touches).map(getOffsetFromTouch);
 
 @Component({
   props: {
@@ -38,6 +53,7 @@ export default class InputHandler extends Vue {
   private currentTouchNum: number = 0;
 
   private touchHandler = new TouchHandler();
+  private downTouches: TouchList | null = null;
 
   public mounted() {
     this.touchHandler.onDownFn = this.execDown;
@@ -67,6 +83,11 @@ export default class InputHandler extends Vue {
     this.before = null;
   }
 
+  get downPos() {
+    if (this.downTouches === null) return null;
+    const points = TouchListToPointArr(this.downTouches);
+    return avarage(points);
+  }
   public execDown(touches: TouchList) {
     const len = touches.length;
     this.currentTouchNum = len;
@@ -75,7 +96,7 @@ export default class InputHandler extends Vue {
       const pos = getOffsetFromTouch(touch);
       this.down(pos);
     } else if (len === 2) {
-      // this.touchesDown(Array.from(touches).map(getOffsetFromTouch));
+      this.downTouches = touches;
     }
   }
   public execMove(touches: TouchList) {
@@ -84,7 +105,13 @@ export default class InputHandler extends Vue {
       const pos = getOffsetFromTouch(touch);
       this.move(pos);
     } else if (touches.length === 2) {
-      // this.touchesMove(Array.from(touches).map(getOffsetFromTouch));
+      const points = TouchListToPointArr(touches);
+      if (this.downPos === null) return;
+      const prev = this.downPos;
+      const curr = avarage(points);
+      this.downTouches = touches;
+
+      tmpViewbox.scroll(prev.x - curr.x, prev.y - curr.y);
     }
   }
   public execUp(touches: TouchList) {
