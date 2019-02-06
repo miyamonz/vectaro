@@ -1,8 +1,8 @@
 <template>
   <g class="control-points">
-    <Breakpoint v-for=" bp in path.breakpoints" 
-    :key="bp.x + ',' + bp.y"
-    v-bind="{bp}"
+    <Breakpoint v-for=" bp,idx in path.breakpoints" 
+      :key="`${idx}-${bp.x}-${bp.y}`"
+      v-bind="{bp}"
     />
   </g>
 </template>
