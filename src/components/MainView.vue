@@ -1,9 +1,5 @@
 <template>
   <div class="main-view">
-    <div>
-      width:<input type="number" v-model="width"/>
-      height:<input type="number" v-model="height"/>
-    </div>
     <div class="path-edit" >
       <SideMenu />
       <InterfaceLayers/>
@@ -30,19 +26,6 @@ import Modal from "@/components/Modal.vue";
   }
 })
 export default class extends Vue {
-  get width(): number {
-    return this.$store.state.width;
-  }
-  set width(val: number) {
-    this.$store.commit("setWidth", val);
-  }
-  get height(): number {
-    return this.$store.state.height;
-  }
-  set height(val: number) {
-    this.$store.commit("setHeight", val);
-  }
-
   public enter() {
     this.$store.commit("setShowCommandPalette", false);
   }
