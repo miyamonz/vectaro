@@ -1,8 +1,12 @@
 <template>
   <component :is="tag" :style="style"
-  @mousemove="move({x:$event.offsetX, y:$event.offsetY})" @touchmove="touchmove"
-  @mousedown="down({x:$event.offsetX, y:$event.offsetY})" @touchstart="touchstart"
-  @mouseup="up({x:$event.offsetX, y:$event.offsetY})"     @touchend="touchend"
+  @mousemove="move({x:$event.offsetX, y:$event.offsetY})"
+  @mousedown="down({x:$event.offsetX, y:$event.offsetY})"
+  @mouseup="up({x:$event.offsetX, y:$event.offsetY})"
+
+  @touchmove="touchmove"
+  @touchstart="touchstart"
+  @touchend="touchend"
     >
     <slot />
   </component>
