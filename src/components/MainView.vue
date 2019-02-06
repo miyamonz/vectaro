@@ -5,10 +5,7 @@
       height:<input type="number" v-model="height"/>
     </div>
     <div class="path-edit" >
-      <div class="side-menu">
-        <PathMenu v-if="$store.getters.currentPath === null" @hovering="hovering = $event" />
-        <PathAttrEditor v-else :path="$store.getters.currentPath"/>
-      </div>
+      <SideMenu />
       <InterfaceLayers/>
     </div>
     <Modal
@@ -21,17 +18,13 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import PathMenu from "@/components/PathMenu.vue";
-import PathAttrEditor from "@/components/PathAttrEditor.vue";
-
+import SideMenu from "@/components/SideMenu.vue";
 import InterfaceLayers from "@/components/InterfaceLayers.vue";
-
 import Modal from "@/components/Modal.vue";
 
 @Component({
   components: {
-    PathAttrEditor,
-    PathMenu,
+    SideMenu,
     InterfaceLayers,
     Modal
   }
@@ -61,14 +54,5 @@ export default class extends Vue {
   position: relative;
   height: 600px;
   justify-content: center;
-}
-.side-menu {
-  background: lightgray;
-
-  left: 10px;
-  top: 10px;
-  z-index: 1;
-  width: 250px;
-  overflow: hidden;
 }
 </style>
