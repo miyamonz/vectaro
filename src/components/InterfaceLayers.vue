@@ -7,7 +7,6 @@
       <PathRenderer 
         v-bind="{width, height}"
         :paths="$store.state.paths"
-        :hovering="hovering"
       />
       <MouseHandler 
         style="z-index: 100"
@@ -42,7 +41,6 @@ import Modal from "@/components/Modal.vue";
   }
 })
 export default class extends Vue {
-  @Prop() private hovering!: string | null;
   get width(): number {
     return this.$store.state.width;
   }

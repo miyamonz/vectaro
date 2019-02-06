@@ -25,7 +25,6 @@ export default class extends Vue {
   @Prop() private paths!: BezierPath[];
   @Prop() private width!: number;
   @Prop() private height!: number;
-  @Prop() private hovering!: number | null;
   get viewbox() {
     return tmpViewbox.viewbox;
   }

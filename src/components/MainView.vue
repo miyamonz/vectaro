@@ -9,7 +9,7 @@
         <PathMenu v-if="$store.getters.currentPath === null" @hovering="hovering = $event" />
         <PathAttrEditor v-else :path="$store.getters.currentPath"/>
       </div>
-      <InterfaceLayers  v-bind="{hovering}"/>
+      <InterfaceLayers/>
     </div>
     <Modal
       v-if="$store.state.editState.showCommandPalette"
@@ -49,8 +49,6 @@ export default class extends Vue {
   set height(val: number) {
     this.$store.commit("setHeight", val);
   }
-
-  private hovering: string | null = null;
 
   public enter() {
     this.$store.commit("setShowCommandPalette", false);
