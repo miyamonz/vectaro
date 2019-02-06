@@ -24,9 +24,6 @@ export default class extends Vue {}
 <style lang="scss">
 .side-menu {
   background: lightgray;
-
-  left: 10px;
-  top: 10px;
   z-index: 1;
   width: 250px;
   overflow: hidden;

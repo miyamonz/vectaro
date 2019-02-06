@@ -35,7 +35,9 @@ export default class extends Vue {
 .path-edit {
   display: flex;
   position: relative;
-  height: 600px;
-  justify-content: center;
+  height: 100vh;
+  .side-menu {
+    left: 0;
+  }
 }
 </style>
