@@ -55,8 +55,7 @@ export default class extends Vue {
     // up
     if (this.addingBreakpoint) {
       const worldPos = tmpViewbox.cameraToWorld(pos);
-      const bp = createSymBp(this.downPos, worldPos);
-      this.$store.dispatch("addBreakpoint", bp);
+      tmpState.addBreakpoint(this.downPos, worldPos);
     }
     const { currentPath } = this.$store.getters;
     if (currentPath.lastBp) {
@@ -77,9 +76,7 @@ export default class extends Vue {
 
     if (this.addingBreakpoint && tmpPath.lastBp) {
       const worldPos = tmpViewbox.cameraToWorld(pos);
-
-      const tmpBp = createSymBp(down ? this.downPos : worldPos, worldPos);
-      Vue.set(tmpPath.breakpoints, 1, tmpBp);
+      tmpState.updateTmpPath(down ? this.downPos : worldPos, worldPos);
     }
   }
 }
