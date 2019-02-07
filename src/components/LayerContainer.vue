@@ -21,7 +21,6 @@ export default class MainView extends Vue {
 <style lang="scss">
 .layers {
   position: relative;
-  border: solid 1px;
   background: transparent;
   & > * {
     background: transparent;
