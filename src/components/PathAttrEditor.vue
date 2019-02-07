@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div class="path-name">{{path.name}}</div>
+    <div class="path-name" style="position: relative">
+      <button style="position: absolute;left: 0"
+        @click="$store.dispatch(`exitDrawPath`)"
+        >←</button>
+      {{path.name}}
+    </div>
     <br>
 
     <span>
