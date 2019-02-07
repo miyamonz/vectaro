@@ -15,14 +15,6 @@ export const encodePath = (path: BezierPath) => {
     d += `C${sh.x} ${sh.y} ${eh.x} ${eh.y} ${next.x} ${next.y}`;
   }
 
-  if (path.close) {
-    const lastSH = bps[bps.length - 1].startHandle;
-    const firstEH = first.endHandle;
-    d += `C${lastSH.x} ${lastSH.y} ${firstEH.x} ${firstEH.y} ${first.x} ${
-      first.y
-    }`;
-  }
-
   return d;
 };
 

@@ -10,7 +10,6 @@ export default class BezierPath {
 
   public readonly key: string;
 
-  public close: boolean = false;
   constructor() {
     this.name = "path" + i++;
 

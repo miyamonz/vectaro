@@ -20,9 +20,6 @@
 
       <span>fill</span> 
       <input type="text" v-model="path.fill">
-
-      <span>close</span> 
-      <input type="checkbox" v-model="path.close">
     </div>
   </div>
 </template>
