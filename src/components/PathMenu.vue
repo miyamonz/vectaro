@@ -7,7 +7,7 @@
       @click="select(path.key)"
     >
       {{path.name}}
-      <button @click="deletePath(path.key)">x</button>
+      <button @click=" e => {deletePath(path.key); e.stopPropagation()}">x</button>
     </div>
   </div>
 </template>
