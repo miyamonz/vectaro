@@ -11,12 +11,12 @@ export interface State {
   height: number;
   paths: BezierPath[];
   editState: {
-    currentPathIndex: number | null;
+    currentPathKey: string | null;
     viewbox: [number, number, number, number];
     showLine: boolean;
     showCommandPalette: boolean;
     grab: null | {
-      name: string;
+      key: string;
       idx: number;
       pointType: "breakpoint" | "startHandle" | "endHandle";
     };
@@ -30,7 +30,7 @@ const initialState: State = {
   height: iw,
   paths: [],
   editState: {
-    currentPathIndex: null,
+    currentPathKey: null,
     viewbox: [0, 0, iw, iw],
     showLine: false,
     showCommandPalette: false,
@@ -42,8 +42,8 @@ const initialState: State = {
 export default new Vuex.Store({
   state: initialState,
   mutations: {
-    setCurrentPathIndex(state: State, val: number | null) {
-      state.editState.currentPathIndex = val;
+    setCurrentPathKey(state: State, key: string | null) {
+      state.editState.currentPathKey = key;
     },
     setSize(state, { width, height }) {
       state.width = width;
@@ -68,13 +68,14 @@ export default new Vuex.Store({
   },
   getters: {
     currentPath(state: State) {
-      if (state.editState.currentPathIndex === null) {
+      if (state.editState.currentPathKey === null) {
         return null;
       }
-      return state.paths[state.editState.currentPathIndex];
+
+      return state.paths.find(p => p.key === state.editState.currentPathKey);
     },
-    currentPathIndex(state) {
-      return state.editState.currentPathIndex;
+    currentPathKey(state) {
+      return state.editState.currentPathKey;
     },
     viewbox(state: State) {
       return state.editState.viewbox.join(" ");

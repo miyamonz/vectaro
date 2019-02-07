@@ -1,14 +1,13 @@
 <template>
   <div class="path-menu">
     <div class="path-item" v-for="path,i in $store.state.paths"
-      :key="path.name"
-      :class="{editing: i === $store.getters.currentPathIndex}"
-      @mouseenter="enter(path.name)"
-      @mouseleave="leave(path.name)"
-      @click="select(path.name)"
+      :key="path.key"
+      @mouseenter="enter(path.key)"
+      @mouseleave="leave(path.key)"
+      @click="select(path.key)"
     >
       {{path.name}}
-      <button @click="deletePath(path.name)">x</button>
+      <button @click="deletePath(path.key)">x</button>
     </div>
   </div>
 </template>
@@ -17,24 +16,22 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class extends Vue {
   private over: boolean = false;
-  public enter(name: string) {
+  public enter(key: string) {
     this.over = true;
-    this.$emit("hovering", name);
+    this.$emit("hovering", key);
   }
-  public leave(name: string) {
+  public leave(key: string) {
     this.over = false;
     this.$emit("hovering", null);
   }
 
-  public select(name: string) {
-    const paths: BezierPath[] = this.$store.state.paths;
-    const idx = paths.findIndex(p => p.name === name);
-    this.$store.commit("setCurrentPathIndex", idx);
+  public select(key: string) {
+    this.$store.commit("setCurrentPathKey", key);
   }
 
-  public deletePath(name: string) {
-    this.$store.dispatch("deletePath", name);
-    this.leave(name);
+  public deletePath(key: string) {
+    this.$store.dispatch("deletePath", key);
+    this.leave(key);
   }
 }
 </script>
