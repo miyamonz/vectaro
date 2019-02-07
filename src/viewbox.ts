@@ -11,6 +11,9 @@ class Viewbox extends Vue {
   public w: number = initial[2];
   public h: number = initial[3];
 
+  set viewbox([x, y, w, h]) {
+    Object.assign(this, { x, y, w, h });
+  }
   get viewbox() {
     const { x, y, w, h } = this;
     return [x, y, w, h];

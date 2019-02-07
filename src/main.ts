@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import tmpViewbox from "./viewbox";
+
 window.onkeyup = (e: KeyboardEvent) => {
   console.log(e);
   if (e.key === "Shift") {
@@ -36,3 +38,21 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
+
+const fixSize = () => {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  const sm = document.querySelector(".side-menu");
+  if (!sm) return;
+  const sw = sm.getBoundingClientRect().width;
+  console.log(w, h, sw);
+  store.commit("setSize", {
+    width: w - sw,
+    height: h
+  });
+  tmpViewbox.viewbox = store.state.editState.viewbox;
+};
+fixSize();
+
+window.onresize = fixSize;

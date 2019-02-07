@@ -45,11 +45,11 @@ export default new Vuex.Store({
     setCurrentPathIndex(state: State, val: number | null) {
       state.editState.currentPathIndex = val;
     },
-    setWidth(state, val) {
-      state.width = val;
-    },
-    setHeight(state, val) {
-      state.height = val;
+    setSize(state, { width, height }) {
+      state.width = width;
+      state.height = height;
+      const vw = state.editState.viewbox[2];
+      Vue.set(state.editState.viewbox, 3, (vw * height) / width);
     },
     setViewbox(state, arr: [number, number, number, number]) {
       for (let i = 0; i < 4; i++) {
