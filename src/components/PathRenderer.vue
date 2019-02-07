@@ -6,7 +6,7 @@
       v-bind="{...path.attrs}"
       :stroke-width=" path.strokeWidth"
     />
-    <Preview :path="tmpPath"/>
+    <Preview v-if="show" :path="tmpPath"/>
   </svg>
 </template>
 
@@ -31,6 +31,9 @@ export default class extends Vue {
 
   get tmpPath() {
     return tmpState.tmpPath;
+  }
+  get show() {
+    return tmpState.show;
   }
 }
 </script>

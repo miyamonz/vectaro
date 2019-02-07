@@ -1,6 +1,7 @@
 <template>
   <component :is="tag" :style="style"
     @mousemove="move({x:$event.offsetX, y:$event.offsetY})"
+    @mouseleave="leave({x:$event.offsetX, y:$event.offsetY})"
     @mousedown="down({x:$event.offsetX, y:$event.offsetY})"
     @mouseup=  "up  ({x:$event.offsetX, y:$event.offsetY})"
   >
@@ -51,6 +52,10 @@ export default class InputHandler extends Vue {
     if (this.$store.state.editState.grab) {
       this.$store.dispatch("setPosOnGrab", pos);
     }
+  }
+  @Emit()
+  public leave(pos: Point) {
+    // leave
   }
   @Emit()
   public down(pos: Point) {

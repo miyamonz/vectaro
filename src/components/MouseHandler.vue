@@ -4,6 +4,7 @@
   @down="down"
   @up="up"
   @move="move"
+  @leave="leave"
   />
 </template>
 <script lang="ts">
@@ -39,6 +40,10 @@ export default class extends Vue {
     this.$el.addEventListener("wheel", listener as EventListener);
   }
 
+  public leave(pos: Point) {
+    tmpState.show = false;
+  }
+
   public down(pos: Point) {
     const worldPos = tmpViewbox.cameraToWorld(pos);
     this.downPos = worldPos;
@@ -65,6 +70,7 @@ export default class extends Vue {
   }
 
   public move(pos: Point, down: boolean) {
+    tmpState.show = true;
     // move
     Vue.set(this.mousePos, "x", pos.x);
     Vue.set(this.mousePos, "y", pos.y);

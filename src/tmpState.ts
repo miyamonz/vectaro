@@ -6,12 +6,14 @@ import { createSymBp } from "@/util.ts";
 @Component
 class TmpState extends Vue {
   public tmpPath: BezierPath = new BezierPath();
+  public show: boolean = true;
 
   get addingBreakpoint() {
     return store.state.editState.addingBreakpoint;
   }
 
   public updateTmpPath(center: Point, sHandle: Point) {
+    if (!this.show) return;
     const tmpBp = createSymBp(center, sHandle);
     Vue.set(this.tmpPath.breakpoints, 1, tmpBp);
   }
