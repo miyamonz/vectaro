@@ -25,8 +25,8 @@ export const addBreakpoint = ({ state, getters }: Context, bp: Breakpoint) => {
 
 export const newPath = ({ state, commit }: Context) => {
   const p = new BezierPath();
-  commit("setCurrentPathKey", p.key);
   state.paths.push(p);
+  commit("setCurrentPathKey", p.key);
   return p;
 };
 
