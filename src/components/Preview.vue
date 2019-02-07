@@ -1,6 +1,5 @@
 <template>
     <g data-name="tmp" v-if="tmpPath" >
-    <text v-bind="bp"> bp{{bp}} </text>
       <path v-if="currentPath.breakpoints.length > 0" 
         v-bind="{...currentPath.attrs}" 
         :d="tmpPath.attrs.d"
