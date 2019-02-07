@@ -70,7 +70,7 @@ export const deletePath = (
 ) => {
   const idx = state.paths.findIndex(p => p.name === name);
   Vue.delete(state.paths, idx);
-  const currentPathIndex = getters;
+  const { currentPathIndex } = getters;
   if (currentPathIndex === idx) {
     commit("setCurrentPathIndex", null);
   }
