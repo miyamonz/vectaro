@@ -65,6 +65,9 @@ export default class InputHandler extends Vue {
   @Emit()
   public up(pos: Point) {
     this.before = null;
+    if (this.$store.state.editState.grab) {
+      this.$store.dispatch("setGrab", null);
+    }
   }
 }
 </script>

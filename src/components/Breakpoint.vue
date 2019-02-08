@@ -8,6 +8,8 @@
       v-bind="{...obj}"
       :r="r"
       :stroke-width="r * 0.1"
+      @mousedown="$emit('grabCircle', key)"
+      @mouseup="$store.dispatch('setGrab', null)"
     />
   </g>
 </template>

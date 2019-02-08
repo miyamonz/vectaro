@@ -4,6 +4,7 @@
       :key="`${idx}-${bp.x}-${bp.y}`"
       v-bind="{bp}"
       :r="r"
+      @grabCircle="dispatchGrab($event, idx)"
     />
   </g>
 </template>
@@ -37,6 +38,14 @@ export default class extends Vue {
 
   get r() {
     return 0.01 * tmpViewbox.vmin;
+  }
+
+  public dispatchGrab(ctype: string, idx: number) {
+    this.$store.dispatch("setGrab", {
+      key: this.path.key,
+      idx,
+      pointType: ctype
+    });
   }
 }
 </script>
