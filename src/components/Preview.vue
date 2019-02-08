@@ -1,15 +1,15 @@
 <template>
     <g data-name="tmp" v-if="path" >
-      <Breakpoint v-if="path.lastBp" :bp="path.lastBp" />
+      <BreakpointLine v-if="path.lastBp" :bp="path.lastBp" />
     </g>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Breakpoint from "./Breakpoint.vue";
+import BreakpointLine from "./BreakpointLine.vue";
 
 @Component({
   components: {
-    Breakpoint
+    BreakpointLine
   }
 })
 export default class extends Vue {

@@ -14,7 +14,7 @@
       <ControlPointsRenderer 
         :style="{'z-index': $store.getters.addingBreakpoint ? 1 : 101}"
         v-bind="{width, height}"
-        v-if="$store.getters.currentPath"
+        v-if="$store.getters.currentPath && !$store.getters.addingBreakpoint"
         :path="$store.getters.currentPath"
       />
     </LayerContainer>

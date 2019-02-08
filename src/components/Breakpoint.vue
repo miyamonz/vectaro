@@ -1,26 +1,21 @@
 <template>
   <g class="breakpoint">
-    <line 
-      :x1="bp.x" :y1="bp.y"
-      :x2="bp.startHandle.x" :y2="bp.startHandle.y"
-      style="stroke:gray"
-      stroke-dasharray="5"
-    />
-    <line 
-      :x1="bp.x" :y1="bp.y"
-      :x2="bp.endHandle.x" :y2="bp.endHandle.y"
-      style="stroke:gray"
-      stroke-dasharray="5"
-    />
-    <circle v-for="[key, obj] in Object.entries(attrsSet(bp))" 
+    <BreakpointLine :bp="bp"/>
+    <circle 
+      v-for="[key, obj] in Object.entries(attrsSet(bp))" 
       :key="key"
-      :class="[key, {adding : $store.state.editState.addingBreakpoint}]" v-bind="{...obj}"
+      :class="[key]" 
+      v-bind="{...obj}"
     />
   </g>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-@Component
+import BreakpointLine from "./BreakpointLine.vue";
+
+@Component({
+  components: { BreakpointLine }
+})
 export default class extends Vue {
   @Prop() private bp!: Breakpoint;
 
