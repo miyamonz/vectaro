@@ -1,5 +1,9 @@
 import { State } from "@/store.ts";
 
+const uFloor = pos => {
+  pos.x = Math.floor(pos.x * 100) / 100;
+  pos.y = Math.floor(pos.y * 100) / 100;
+};
 export const encodePath = (path: BezierPath) => {
   const bps = path.breakpoints;
   if (bps.length === 0) {
@@ -12,6 +16,10 @@ export const encodePath = (path: BezierPath) => {
     const sh = bps[i].startHandle;
     const next = bps[i + 1];
     const eh = next.endHandle;
+
+    uFloor(sh);
+    uFloor(eh);
+    uFloor(next);
     d += `C${sh.x} ${sh.y} ${eh.x} ${eh.y} ${next.x} ${next.y}`;
   }
 
