@@ -71,7 +71,6 @@ if (args.svg) {
 }
 if (args.url) {
   const cors = "https://cors-anywhere.herokuapp.com/";
-  console.log(cors + args.url);
   fetch(cors + args.url)
     .then(res => res.text())
     .then(text => {
