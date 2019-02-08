@@ -33,6 +33,9 @@ class Viewbox extends Vue {
     store.commit("setViewbox", this.viewbox);
   }
   public zoom(deltaX: number, deltaY: number, cameraAnchor: Point) {
+    if (this.vmin < 12 && deltaY < 0) return;
+    if (this.vmin > 20000 && deltaY > 0) return;
+
     const normX = cameraAnchor.x / store.state.width;
     const normY = cameraAnchor.y / store.state.height;
 

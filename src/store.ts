@@ -35,7 +35,7 @@ const initialState: State = {
     hoveringPathKey: null,
     currentPathKey: null,
     viewbox: [0, 0, iw, iw],
-    showLine: false,
+    showLine: true,
     showCommandPalette: false,
     addingBreakpoint: true,
     grab: null
