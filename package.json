@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@types/cheerio": "^0.22.10",
+    "@types/clipboard": "^2.0.1",
     "cheerio": "^1.0.0-rc.2",
+    "clipboard": "^2.0.4",
     "tslint-config-prettier": "^1.17.0",
     "vue": "^2.5.21",
     "vue-class-component": "^6.0.0",
