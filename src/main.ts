@@ -66,5 +66,17 @@ document.location.search
 
 if (args.svg) {
   store.commit("setFromSVG", args.svg);
+  // @ts-ignore
   history.replaceState(null, null, "/");
+}
+if (args.url) {
+  const cors = "https://cors-anywhere.herokuapp.com/";
+  console.log(cors + args.url);
+  fetch(cors + args.url)
+    .then(res => res.text())
+    .then(text => {
+      store.commit("setFromSVG", text);
+      // @ts-ignore
+      history.replaceState(null, null, "/");
+    });
 }
