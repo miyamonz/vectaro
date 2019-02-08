@@ -15,8 +15,9 @@ import tmpState from "@/tmpState.ts";
 
 const { tmpPath } = tmpState;
 
-import { debounce, createSymBp } from "@/util.ts";
-const debounceCommit = debounce(() => tmpViewbox.commit());
+import { createSymBp } from "@/util.ts";
+import Debounce from "@/Debounce";
+const debounceViewbox = new Debounce<void>(() => tmpViewbox.commit());
 
 @Component({ components: { InputHandler } })
 export default class extends Vue {
@@ -26,15 +27,15 @@ export default class extends Vue {
   private downPos: Point = { x: 0, y: 0 };
   private mousePos: Point = { x: 0, y: 0 };
 
-  public mounted() {
-    const listener = (e: WheelEvent) => {
-      e.preventDefault();
-      if (e.ctrlKey) tmpViewbox.zoom(e.deltaX, e.deltaY, this.mousePos);
-      else tmpViewbox.scroll(e.deltaX, e.deltaY);
+  public onWheel(e: WheelEvent) {
+    e.preventDefault();
+    if (e.ctrlKey) tmpViewbox.zoom(e.deltaX, e.deltaY, this.mousePos);
+    else tmpViewbox.scroll(e.deltaX, e.deltaY);
 
-      debounceCommit();
-    };
-    this.$el.addEventListener("wheel", listener as EventListener);
+    debounceViewbox.input();
+  }
+  public mounted() {
+    this.$el.addEventListener("wheel", this.onWheel as EventListener);
   }
 
   get currentPath() {
