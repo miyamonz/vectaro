@@ -69,6 +69,9 @@ export default new Vuex.Store({
     },
     setPaths(state, paths: BezierPath[]) {
       state.paths = paths;
+    },
+    setAddingBreakpoint(state, b: boolean) {
+      state.editState.addingBreakpoint = b;
     }
   },
   getters: {

@@ -11,10 +11,6 @@ const addBreakpointToPath = (path: BezierPath, point: Breakpoint) => {
   path.breakpoints.push(point);
 };
 
-export const updateEditState = ({ state }: Context, b: boolean) => {
-  state.editState.addingBreakpoint = b;
-};
-
 export const addBreakpoint = ({ state, getters }: Context, bp: Breakpoint) => {
   const { currentPath } = getters;
   if (currentPath === null) {

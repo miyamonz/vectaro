@@ -51,6 +51,7 @@ export default class extends Vue {
     this.downPos = worldPos;
 
     if (!this.currentPath) {
+      this.$store.commit("setAddingBreakpoint", true);
       this.$store.dispatch("newPath");
       tmpPath.breakpoints = [];
     }

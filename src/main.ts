@@ -8,7 +8,13 @@ import tmpViewbox from "./viewbox";
 window.onkeyup = (e: KeyboardEvent) => {};
 window.onkeydown = (e: KeyboardEvent) => {
   if (e.key === "Escape" || e.key === "Enter") {
-    store.dispatch("exitDrawPath");
+    const { currentPath, addingBreakpoint } = store.getters;
+    if (currentPath && addingBreakpoint) {
+      store.commit("setAddingBreakpoint", false);
+    } else if (currentPath) {
+      store.dispatch("exitDrawPath");
+    }
+
     return;
   }
 

@@ -1,6 +1,5 @@
 <template>
   <div class="misc">
-    <input v-model="adding" type="checkbox" style="width: 50px; transform: scale(2)"><br>
     <ButtonDownload />
     <InputFile />
   </div>
@@ -16,12 +15,5 @@ import InputFile from "@/components/InputFile.vue";
     InputFile
   }
 })
-export default class extends Vue {
-  get adding() {
-    return this.$store.getters.addingBreakpoint;
-  }
-  set adding(b: boolean) {
-    this.$store.dispatch("updateEditState", b);
-  }
-}
+export default class extends Vue {}
 </script>
