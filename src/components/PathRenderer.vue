@@ -39,7 +39,7 @@ export default class extends Vue {
     return (
       tmpState.show &&
       this.$store.getters.currentPath &&
-      this.$store.state.editState.addingBreakpoint
+      this.$store.getters.addingBreakpoint
     );
   }
   public isCurrent(key: string) {

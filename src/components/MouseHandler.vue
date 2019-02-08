@@ -56,7 +56,7 @@ export default class extends Vue {
     }
   }
   get addingBreakpoint() {
-    return this.$store.state.editState.addingBreakpoint;
+    return this.$store.getters.addingBreakpoint;
   }
   public up(pos: Point) {
     // up

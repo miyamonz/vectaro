@@ -18,7 +18,7 @@ import InputFile from "@/components/InputFile.vue";
 })
 export default class extends Vue {
   get adding() {
-    return this.$store.state.editState.addingBreakpoint;
+    return this.$store.getters.addingBreakpoint;
   }
   set adding(b: boolean) {
     this.$store.dispatch("updateEditState", b);

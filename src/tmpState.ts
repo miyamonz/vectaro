@@ -35,7 +35,7 @@ class TmpState extends Vue {
   }
 
   public addBreakpoint(center: Point, sHandle: Point) {
-    if (!store.state.editState.addingBreakpoint) return;
+    if (!store.getters.addingBreakpoint) return;
     const bp = createSymBp(center, sHandle);
     store.dispatch("addBreakpoint", bp);
   }

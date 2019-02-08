@@ -86,6 +86,9 @@ export default new Vuex.Store({
     viewbox(state: State) {
       return state.editState.viewbox.join(" ");
     },
+    addingBreakpoint(state: State) {
+      return state.editState.addingBreakpoint;
+    },
     toSVG
   },
   actions
