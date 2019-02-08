@@ -10,7 +10,6 @@
       @click="select(path.key)"
     >
       {{path.name}}
-      <button @click=" e => {deletePath(path.key); e.stopPropagation()}">x</button>
     </div>
   </div>
 </template>
@@ -30,11 +29,6 @@ export default class extends Vue {
 
   public select(key: string) {
     this.$store.commit("setCurrentPathKey", key);
-  }
-
-  public deletePath(key: string) {
-    this.$store.dispatch("deletePath", key);
-    this.leave(key);
   }
 }
 </script>

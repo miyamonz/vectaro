@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="path-name" style="position: relative">
+    <div class="path-name">
       <button style="position: absolute;left: 0"
         @click="$store.dispatch(`exitDrawPath`)"
         >←</button>
       <input type="text" v-model="path.name">
+      <button class="delete-path" @click="deletePath(path.key)">x</button>
     </div>
     <br>
 
@@ -28,12 +29,20 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class extends Vue {
   @Prop() public path!: BezierPath;
+  public deletePath(key: string) {
+    this.$store.dispatch("deletePath", key);
+  }
 }
 </script>
 <style lang="scss">
 .path-name {
+  position: relative;
   width: 100%;
   border: solid 1px;
+  .delete-path {
+    position: absolute;
+    right: 0;
+  }
 }
 .attrs {
   display: flex;
