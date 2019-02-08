@@ -5,7 +5,9 @@ import store from "./store";
 
 import tmpViewbox from "./viewbox";
 
-window.onkeyup = (e: KeyboardEvent) => {};
+window.onkeyup = (e: KeyboardEvent) => {
+  // onkeyup
+};
 window.onkeydown = (e: KeyboardEvent) => {
   if (e.key === "Escape" || e.key === "Enter") {
     const { currentPath, addingBreakpoint } = store.getters;
