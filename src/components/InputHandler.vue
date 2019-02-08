@@ -50,7 +50,8 @@ export default class InputHandler extends Vue {
     this.$emit("move", pos, this.before);
     // control pointをgrabしてれば動かす
     if (this.$store.state.editState.grab) {
-      this.$store.dispatch("setPosOnGrab", pos);
+      const wpos = tmpViewbox.cameraToWorld(pos);
+      this.$store.dispatch("setPosOnGrab", wpos);
     }
   }
   @Emit()
