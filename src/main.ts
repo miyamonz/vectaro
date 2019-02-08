@@ -5,16 +5,8 @@ import store from "./store";
 
 import tmpViewbox from "./viewbox";
 
-window.onkeyup = (e: KeyboardEvent) => {
-  if (e.key === "Shift") {
-    store.dispatch("updateEditState", false);
-  }
-};
+window.onkeyup = (e: KeyboardEvent) => {};
 window.onkeydown = (e: KeyboardEvent) => {
-  if (e.key === "Shift") {
-    store.dispatch("updateEditState", true);
-    return;
-  }
   if (e.key === "Escape" || e.key === "Enter") {
     store.dispatch("exitDrawPath");
     return;
