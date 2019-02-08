@@ -1,7 +1,6 @@
 <template>
   <div class="misc">
     <input v-model="adding" type="checkbox" style="width: 50px; transform: scale(2)"><br>
-    <button @click="$store.commit('setViewbox', [0,0,500,500])">reset viewport</button><br>
     <ButtonDownload />
     <InputFile />
   </div>
