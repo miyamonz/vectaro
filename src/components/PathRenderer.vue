@@ -34,8 +34,8 @@ export default class extends Vue {
   }
 
   get show() {
-    //これがないとcurrentPathがないときにあまりが見える
-    //existPathしたときにtmpState.tmpPathを更新するという手もあるが
+    // これがないとcurrentPathがないときにあまりが見える
+    // existPathしたときにtmpState.tmpPathを更新するという手もあるが
     return (
       tmpState.show &&
       this.$store.getters.currentPath &&

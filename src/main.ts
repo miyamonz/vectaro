@@ -6,7 +6,6 @@ import store from "./store";
 import tmpViewbox from "./viewbox";
 
 window.onkeyup = (e: KeyboardEvent) => {
-  console.log(e);
   if (e.key === "Shift") {
     store.dispatch("updateEditState", false);
   }
@@ -46,7 +45,6 @@ const fixSize = () => {
   const sm = document.querySelector(".side-menu");
   if (!sm) return;
   const sw = sm.getBoundingClientRect().width;
-  console.log(w, h, sw);
   store.commit("setSize", {
     width: w - sw,
     height: h
