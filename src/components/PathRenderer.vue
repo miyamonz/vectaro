@@ -36,7 +36,11 @@ export default class extends Vue {
   get show() {
     //これがないとcurrentPathがないときにあまりが見える
     //existPathしたときにtmpState.tmpPathを更新するという手もあるが
-    return tmpState.show && this.$store.getters.currentPath;
+    return (
+      tmpState.show &&
+      this.$store.getters.currentPath &&
+      this.$store.state.editState.addingBreakpoint
+    );
   }
   public isCurrent(key: string) {
     return key === this.$store.getters.currentPathKey;
