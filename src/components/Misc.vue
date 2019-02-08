@@ -8,6 +8,7 @@
     import
     <ul>
       <li> <InputFile /> </li>
+      <li> <PasteSVG /> </li>
     </ul>
   </div>
 </template>
@@ -17,11 +18,14 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import ButtonDownload from "@/components/ButtonDownload.vue";
 import InputFile from "@/components/InputFile.vue";
 import CopyToClipboard from "@/components/CopyToClipboard.vue";
+import PasteSVG from "@/components/PasteSVG.vue";
+
 @Component({
   components: {
     ButtonDownload,
     InputFile,
-    CopyToClipboard
+    CopyToClipboard,
+    PasteSVG
   }
 })
 export default class extends Vue {}

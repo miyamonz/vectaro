@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import * as actions from "@/store/actions.ts";
 
 import { toSVG } from "@/util";
+import parseSVG from "@/parseSVG.ts";
 
 Vue.use(Vuex);
 
@@ -68,6 +69,10 @@ export default new Vuex.Store({
       state.editState.showCommandPalette = b;
     },
     setPaths(state, paths: BezierPath[]) {
+      state.paths = paths;
+    },
+    setFromSVG(state, txt: string) {
+      const paths = parseSVG(txt);
       state.paths = paths;
     },
     setAddingBreakpoint(state, b: boolean) {

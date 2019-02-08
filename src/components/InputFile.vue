@@ -47,8 +47,7 @@ export default class extends Vue {
     this.txt = txt;
 
     try {
-      const paths = parseSVG(txt);
-      this.$store.commit("setPaths", paths);
+      this.$store.commit("setFromSVG", txt);
       this.txt = "ロードできた";
     } catch {
       this.resultText = errorText;
