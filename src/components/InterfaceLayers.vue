@@ -1,5 +1,4 @@
 <template>
-  <div class="interface-layers">
     <LayerContainer v-bind="{width, height}">
       <GridRenderer 
         v-bind="{width, height}"
@@ -19,7 +18,6 @@
         :path="$store.getters.currentPath"
       />
     </LayerContainer>
-  </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
@@ -49,7 +47,3 @@ export default class extends Vue {
   }
 }
 </script>
-<style lang="scss">
-.interface-layers {
-}
-</style>
