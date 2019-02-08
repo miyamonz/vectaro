@@ -11,6 +11,7 @@ export interface State {
   height: number;
   paths: BezierPath[];
   editState: {
+    hoveringPathKey: string | null;
     currentPathKey: string | null;
     viewbox: [number, number, number, number];
     showLine: boolean;
@@ -30,6 +31,7 @@ const initialState: State = {
   height: iw,
   paths: [],
   editState: {
+    hoveringPathKey: null,
     currentPathKey: null,
     viewbox: [0, 0, iw, iw],
     showLine: false,
@@ -42,6 +44,9 @@ const initialState: State = {
 export default new Vuex.Store({
   state: initialState,
   mutations: {
+    setHoveringPathKey(state: State, key: string | null) {
+      state.editState.hoveringPathKey = key;
+    },
     setCurrentPathKey(state: State, key: string | null) {
       state.editState.currentPathKey = key;
     },

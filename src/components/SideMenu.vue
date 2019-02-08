@@ -1,6 +1,6 @@
 <template>
   <div class="side-menu">
-    <PathMenu v-if="$store.getters.currentPath === null" @hovering="hovering = $event" />
+    <PathMenu v-if="$store.getters.currentPath === null" @hovering="$store.commit('setHoveringPathKey', $event)" />
     <PathAttrEditor v-else :path="$store.getters.currentPath"/>
     <Misc />
   </div>

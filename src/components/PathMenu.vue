@@ -1,6 +1,9 @@
 <template>
   <div class="path-menu">
-    <div class="path-item" v-for="path,i in $store.state.paths"
+    <div
+      v-for="path,i in $store.state.paths"
+      class="path-item" 
+      :class="{hovering: path.key === $store.state.editState.hoveringPathKey}"
       :key="path.key"
       @mouseenter="enter(path.key)"
       @mouseleave="leave(path.key)"
@@ -40,8 +43,8 @@ export default class extends Vue {
 }
 .path-item {
   border: solid 1px;
-  &.editing {
-    background: lightgray;
+  &.hovering {
+    background: white;
   }
 }
 </style>
