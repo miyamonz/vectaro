@@ -4,7 +4,7 @@
     >
     <path v-for="path in paths" :key="path.key"
       v-bind="{...path.attrs}"
-      :stroke-width=" path.strokeWidth"
+      :d="path.attrs.d + (show && isCurrent(path.key) ? tmpPath.attrs.d : ``)"
     />
     <Preview v-if="show" :path="tmpPath"/>
   </svg>
@@ -32,8 +32,12 @@ export default class extends Vue {
   get tmpPath() {
     return tmpState.tmpPath;
   }
+
   get show() {
     return tmpState.show;
+  }
+  public isCurrent(key: string) {
+    return key === this.$store.getters.currentPathKey;
   }
 }
 </script>

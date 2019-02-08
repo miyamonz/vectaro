@@ -68,11 +68,12 @@ export default new Vuex.Store({
   },
   getters: {
     currentPath(state: State) {
-      if (state.editState.currentPathKey === null) {
+      const key = state.editState.currentPathKey;
+      if (key === null) {
         return null;
       }
 
-      return state.paths.find(p => p.key === state.editState.currentPathKey);
+      return state.paths.find(p => p.key === key);
     },
     currentPathKey(state) {
       return state.editState.currentPathKey;

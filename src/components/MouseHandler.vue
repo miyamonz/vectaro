@@ -26,9 +26,6 @@ export default class extends Vue {
   private downPos: Point = { x: 0, y: 0 };
   private mousePos: Point = { x: 0, y: 0 };
 
-  get viewbox() {
-    return tmpViewbox.viewbox;
-  }
   public mounted() {
     const listener = (e: WheelEvent) => {
       e.preventDefault();
@@ -40,6 +37,10 @@ export default class extends Vue {
     this.$el.addEventListener("wheel", listener as EventListener);
   }
 
+  get currentPath() {
+    return this.$store.getters.currentPath;
+  }
+
   public leave(pos: Point) {
     tmpState.show = false;
   }
@@ -48,7 +49,7 @@ export default class extends Vue {
     const worldPos = tmpViewbox.cameraToWorld(pos);
     this.downPos = worldPos;
 
-    if (!this.$store.getters.currentPath) {
+    if (!this.currentPath) {
       this.$store.dispatch("newPath");
       tmpPath.breakpoints = [];
     }
@@ -62,11 +63,7 @@ export default class extends Vue {
       const worldPos = tmpViewbox.cameraToWorld(pos);
       tmpState.addBreakpoint(this.downPos, worldPos);
     }
-    const { currentPath } = this.$store.getters;
-    if (currentPath.lastBp) {
-      tmpPath.breakpoints = [];
-      tmpPath.breakpoints[0] = currentPath.lastBp;
-    }
+    tmpState.setStartHandleToLastBp();
   }
 
   public move(pos: Point, down: boolean) {
@@ -75,14 +72,23 @@ export default class extends Vue {
     Vue.set(this.mousePos, "x", pos.x);
     Vue.set(this.mousePos, "y", pos.y);
 
-    if (this.addingBreakpoint && !tmpPath.lastBp) {
-      const bp = createSymBp(this.downPos, this.downPos);
-      tmpPath.breakpoints = [bp];
+    tmpState.setStartHandleToLastBp();
+
+    if (!this.addingBreakpoint) return;
+
+    if (!tmpPath.lastBp) {
+      tmpState.setStartHandle(this.downPos);
     }
 
-    if (this.addingBreakpoint && tmpPath.lastBp) {
-      const worldPos = tmpViewbox.cameraToWorld(pos);
-      tmpState.updateTmpPath(down ? this.downPos : worldPos, worldPos);
+    if (!this.currentPath) return;
+    const worldPos = tmpViewbox.cameraToWorld(pos);
+    const currentBp = this.currentPath.breakpoints;
+
+    if (currentBp.length === 0) {
+      tmpState.updateFirstBp(down ? this.downPos : worldPos, worldPos);
+    }
+    if (currentBp.length > 0) {
+      tmpState.updateSecondBp(down ? this.downPos : worldPos, worldPos);
     }
   }
 }
