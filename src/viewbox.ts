@@ -18,6 +18,10 @@ class Viewbox extends Vue {
     const { x, y, w, h } = this;
     return [x, y, w, h];
   }
+
+  get vmin() {
+    return Math.min(this.w, this.h);
+  }
   public cameraToWorld(p: Point): Point {
     const [vx, vy, vw, vh] = this.viewbox;
     return {

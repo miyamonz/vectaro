@@ -6,6 +6,8 @@
       :key="key"
       :class="[key]" 
       v-bind="{...obj}"
+      :r="r"
+      :stroke-width="r * 0.1"
     />
   </g>
 </template>
@@ -17,6 +19,7 @@ import BreakpointLine from "./BreakpointLine.vue";
   components: { BreakpointLine }
 })
 export default class extends Vue {
+  @Prop() private r!: Breakpoint;
   @Prop() private bp!: Breakpoint;
 
   public attrsSet(bp: Breakpoint) {
@@ -34,25 +37,13 @@ export default class extends Vue {
   pointer-events: auto;
   fill: black;
   stroke: black;
-  r: 3;
-  &:hover {
-    r: 5;
-    stroke-width: 3;
-  }
+
   &.startHandle,
   &.endHandle {
-    &:hover {
-      stroke-width: 5;
-    }
     fill: white;
-    r: 7;
   }
   &.startHandle {
     stroke: red;
-  }
-
-  &.adding {
-    r: 0;
   }
 }
 </style>

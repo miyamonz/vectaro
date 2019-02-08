@@ -3,12 +3,14 @@
     <Breakpoint v-for=" bp,idx in path.breakpoints" 
       :key="`${idx}-${bp.x}-${bp.y}`"
       v-bind="{bp}"
+      :r="r"
     />
   </g>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import Breakpoint from "./Breakpoint.vue";
+import tmpViewbox from "@/viewbox.ts";
 @Component({
   components: {
     Breakpoint
@@ -31,6 +33,10 @@ export default class extends Vue {
   }
   public up() {
     this.$emit("upPoint");
+  }
+
+  get r() {
+    return 0.01 * tmpViewbox.vmin;
   }
 }
 </script>
