@@ -4,7 +4,7 @@
       <button style="position: absolute;left: 0"
         @click="$store.dispatch(`exitDrawPath`)"
         >←</button>
-      {{path.name}}
+      <input type="text" v-model="path.name">
     </div>
     <br>
 
