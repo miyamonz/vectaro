@@ -2,7 +2,7 @@
   <svg :width="width" :height="height" 
     :viewBox="viewbox"
     >
-    <path v-for="path in [...paths].reverse()" :key="path.key"
+    <path v-for="path in paths" :key="path.key"
       v-bind="{...path.attrs}"
       :d="path.attrs.d + (show && isCurrent(path.key) ? tmpPath.attrs.d : ``)"
     />
