@@ -1,12 +1,14 @@
 <template>
   <div class="misc">
+    export
     <ul>
       <li> <ButtonDownload /> </li>
       <li> <CopyToClipboard :text="$store.getters.toSVG">copy to clipboard</CopyToClipboard> </li>
     </ul>
-    <div>
-      <InputFile />
-    </div>
+    import
+    <ul>
+      <li> <InputFile /> </li>
+    </ul>
   </div>
 </template>
 <script lang="ts">
@@ -24,3 +26,11 @@ import CopyToClipboard from "@/components/CopyToClipboard.vue";
 })
 export default class extends Vue {}
 </script>
+<style lang="scss" scoped>
+.misc {
+  text-align: left;
+  ul {
+    margin: 0;
+  }
+}
+</style>
