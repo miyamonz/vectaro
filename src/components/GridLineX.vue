@@ -1,5 +1,5 @@
 <template>
-  <g class="grid-line-x">
+  <g class="grid-line grid-line-x">
     <line
       :stroke-width="sw"
       :x1="mapX(x)" 

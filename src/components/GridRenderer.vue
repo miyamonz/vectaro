@@ -1,5 +1,5 @@
 <template>
-  <svg :width="width" :height="height">
+  <transition-group tag="svg" :width="width" :height="height">
     <GridLineX v-for="x in xBig" 
       :key="'xb-' + x"
       :x="x"
@@ -24,7 +24,7 @@
       :sw="swSmall"
       :showText="true"
     />
-  </svg>
+  </transition-group>
 </template>
 
 <script lang="ts">
@@ -105,5 +105,23 @@ export default class extends Vue {
 line,
 text {
   stroke: lightgray;
+}
+.grid-line {
+  &.v-enter-active {
+    transition: opacity 0.3s ease;
+    line {
+      transition: stroke-width 0.3s ease;
+    }
+  }
+  &.v-leave-active {
+    transition: opacity 0.1s ease;
+    line {
+      transition: stroke-width 0.3s ease;
+    }
+  }
+  &.v-enter,
+  &.v-leave-to {
+    opacity: 0;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <g class="grid-line-y">
+  <g class="grid-line grid-line-y">
     <line
       :stroke-width="sw"
       :x1="0"
