@@ -42,6 +42,7 @@ export default class extends Vue {
   }
 
   public select(key: string) {
+    this.$store.commit("setAddingBreakpoint", false)
     this.$store.commit("setCurrentPathKey", key);
   }
 }
