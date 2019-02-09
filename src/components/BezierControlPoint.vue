@@ -4,6 +4,7 @@
       :key="`${idx}-${bp.x}-${bp.y}`"
       v-bind="{bp}"
       :r="r"
+      :sw="r * 0.3"
       @grabCircle="dispatchGrab($event, idx)"
     />
   </g>

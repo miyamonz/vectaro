@@ -1,6 +1,6 @@
 <template>
   <g class="breakpoint">
-    <BreakpointLine :bp="bp"/>
+    <BreakpointLine :bp="bp" :sw="sw"/>
     <circle 
       v-for="[key, obj] in Object.entries(attrsSet(bp))" 
       :key="key"
@@ -22,6 +22,7 @@ import BreakpointLine from "./BreakpointLine.vue";
 })
 export default class extends Vue {
   @Prop() private r!: Breakpoint;
+  @Prop() private sw!: number;
   @Prop() private bp!: Breakpoint;
 
   public attrsSet(bp: Breakpoint) {
