@@ -20,10 +20,11 @@ export const addBreakpoint = ({ state, getters }: Context, bp: Breakpoint) => {
 };
 
 export const newPath = ({ state, commit }: Context) => {
-  const p = new BezierPath();
-  state.paths.push(p);
-  commit("setCurrentPathKey", p.key);
-  return p;
+  const path = new BezierPath();
+  state.current = {
+    path
+  };
+  return path;
 };
 
 export const setGrab = ({ state }: Context, g: any) => {
@@ -56,8 +57,16 @@ export const setPosOnGrab = ({ state }: Context, point: Point) => {
   }
 };
 
-export const exitDrawPath = ({ commit }: Context) => {
-  commit("setCurrentPathKey", null);
+export const exitDrawPath = ({ state, commit }: Context) => {
+  if (!state.current) return;
+
+  const currKey = state.current.path.key;
+
+  const foundIndex = state.paths.findIndex(p => p.key === currKey);
+  if (foundIndex >= 0) Vue.set(state.paths, foundIndex, state.current.path);
+  else state.paths.push(state.current.path);
+
+  commit("deleteCurrent");
 };
 
 export const deletePath = (
@@ -67,8 +76,7 @@ export const deletePath = (
   const idx = state.paths.findIndex(p => p.key === key);
   Vue.delete(state.paths, idx);
 
-  const { currentPathKey } = getters;
-  if (currentPathKey === key) {
-    commit("setCurrentPathKey", null);
+  if (state.current && state.current.path.key === key) {
+    commit("deleteCurrent");
   }
 };

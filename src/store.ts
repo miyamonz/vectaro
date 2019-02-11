@@ -11,9 +11,11 @@ export interface State {
   width: number;
   height: number;
   paths: BezierPath[];
+  current: null | {
+    path: BezierPath;
+  };
   editState: {
     hoveringPathKey: string | null;
-    currentPathKey: string | null;
     viewbox: [number, number, number, number];
     showLine: boolean;
     showCommandPalette: boolean;
@@ -31,9 +33,9 @@ const initialState: State = {
   width: iw,
   height: iw,
   paths: [],
+  current: null,
   editState: {
     hoveringPathKey: null,
-    currentPathKey: null,
     viewbox: [0, 0, iw, iw],
     showLine: true,
     showCommandPalette: false,
@@ -48,8 +50,13 @@ export default new Vuex.Store({
     setHoveringPathKey(state: State, key: string | null) {
       state.editState.hoveringPathKey = key;
     },
-    setCurrentPathKey(state: State, key: string | null) {
-      state.editState.currentPathKey = key;
+    setCurrentFromKey(state: State, key: string) {
+      const path = state.paths.find(p => p.key === key);
+      if (path) state.current = { path };
+    },
+
+    deleteCurrent(state: State) {
+      state.current = null;
     },
     setSize(state, { width, height }) {
       state.width = width;
@@ -81,15 +88,8 @@ export default new Vuex.Store({
   },
   getters: {
     currentPath(state: State) {
-      const key = state.editState.currentPathKey;
-      if (key === null) {
-        return null;
-      }
-
-      return state.paths.find(p => p.key === key);
-    },
-    currentPathKey(state) {
-      return state.editState.currentPathKey;
+      if (!state.current) return null;
+      return state.current.path;
     },
     viewbox(state: State) {
       return state.editState.viewbox.join(" ");

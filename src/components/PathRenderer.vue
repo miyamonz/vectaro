@@ -4,7 +4,11 @@
     >
     <path v-for="path in paths" :key="path.key"
       v-bind="{...path.attrs}"
-      :d="path.attrs.d + (show && isCurrent(path.key) ? tmpPath.attrs.d : ``)"
+    />
+    <path 
+      v-if="currentPath"
+      v-bind="{...currentPath.attrs}"
+      :d="currentPath.attrs.d + (show ? tmpPath.attrs.d : '')"
     />
     <Preview v-if="show" :path="tmpPath"/>
   </svg>
@@ -33,6 +37,10 @@ export default class extends Vue {
     return tmpState.tmpPath;
   }
 
+  get currentPath() {
+    return this.$store.getters.currentPath;
+  }
+
   get show() {
     // これがないとcurrentPathがないときにあまりが見える
     // existPathしたときにtmpState.tmpPathを更新するという手もあるが
@@ -41,9 +49,6 @@ export default class extends Vue {
       this.$store.getters.currentPath &&
       this.$store.getters.addingBreakpoint
     );
-  }
-  public isCurrent(key: string) {
-    return key === this.$store.getters.currentPathKey;
   }
 }
 </script>
