@@ -1,6 +1,6 @@
 import { State } from "@/store.ts";
 
-const uFloor = pos => {
+const uFloor = (pos: Point) => {
   pos.x = Math.floor(pos.x * 100) / 100;
   pos.y = Math.floor(pos.y * 100) / 100;
 };
