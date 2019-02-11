@@ -37,7 +37,9 @@ export const setPosOnGrab = ({ state }: Context, point: Point) => {
     return;
   }
 
-  const path = state.paths.find(p => p.key === grab.key);
+  const paths = [...state.paths];
+  if (state.current) paths.push(state.current.path);
+  const path = paths.find(p => p.key === grab.key);
   if (!path) {
     return;
   }
