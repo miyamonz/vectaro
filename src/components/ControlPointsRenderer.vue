@@ -9,6 +9,13 @@
   @move="move"
   :viewBox="viewbox"
   >
+    <circle
+      :cx="lastBp.x" :cy="lastBp.y"
+      r="10" 
+      fill="red"
+      style="pointer-events:auto"
+      @mouseup="$store.commit('setAddingBreakpoint', true)"
+    />
     <BezierControlPoint :path="path"
       @downPoint="downPoint"
     />
@@ -46,6 +53,10 @@ export default class MainView extends Vue {
   }
   public move(pos: Point) {
     // move
+  }
+
+  get lastBp() {
+    return this.path.lastBp;
   }
 }
 </script>
