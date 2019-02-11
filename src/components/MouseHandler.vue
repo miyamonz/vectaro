@@ -50,7 +50,9 @@ export default class extends Vue {
     const worldPos = tmpViewbox.cameraToWorld(pos);
     this.downPos = worldPos;
 
-    if (!this.currentPath) {
+    if (this.currentPath) {
+      if (!this.addingBreakpoint) this.$store.dispatch("exitDrawPath");
+    } else {
       this.$store.commit("setAddingBreakpoint", true);
       this.$store.dispatch("newPath");
       tmpPath.breakpoints = [];
