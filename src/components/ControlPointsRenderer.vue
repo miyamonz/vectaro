@@ -5,6 +5,7 @@
   :height="height" 
   style="pointer-events:none"
   @up="up"
+  @down="down"
   @move="move"
   :viewBox="viewbox"
   >
@@ -37,10 +38,13 @@ export default class MainView extends Vue {
   public downPoint(grab: object) {
     this.$store.dispatch("setGrab", grab);
   }
-  public up(x: number, y: number) {
+  public down(pos: Point) {
+    // down
+  }
+  public up(pos: Point) {
     this.$store.dispatch("setGrab", null);
   }
-  public move(x: number, y: number) {
+  public move(pos: Point) {
     // move
   }
 }
