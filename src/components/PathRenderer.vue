@@ -5,6 +5,7 @@
     <path v-for="path in paths" :key="path.key"
       v-bind="{...path.attrs}"
     />
+    <rect v-if="currentPath" x=0 y=0 v-bind="{width, height}" fill="#fffa" />
     <path 
       v-if="currentPath"
       v-bind="{...currentPath.attrs}"
